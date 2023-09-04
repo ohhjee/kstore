@@ -1,0 +1,41 @@
+.btn {
+    background-color: blue;
+    width: 50%;
+    display: block;
+    margin: 2rem auto;
+    color: white;
+    padding: .5rem 0;
+    border-radius: 50px;
+
+}
+
+#nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: blue;
+    padding: 10px 50px;
+
+    #toggle-btn {
+        // height: 2px;
+        width: 2%;
+
+        span {
+            background-color: white;
+            margin: 5px;
+            height: 2px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+        }
+    }
+
+    ul {
+        display: flex;
+        align-items: center;
+    }
+}
+
+@import "node_modules/font-awesome/scss/font-awesome.scss";

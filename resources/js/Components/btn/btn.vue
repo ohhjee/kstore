@@ -1,0 +1,38 @@
+<template>
+    <div>
+        <button :class="['btn', type]" type="button">
+            <slot />
+        </button>
+    </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
+    props: {
+        type: {
+            type: String,
+        },
+    },
+    setup() {
+        return {};
+    },
+});
+</script>
+
+<style scoped lang="scss">
+.btn {
+    padding: 14px 30px;
+    border-radius: 8px;
+    width: 100%;
+    text-transform: capitalize;
+    color: white;
+    &.primary {
+        background: blue;
+    }
+    &.jumia-color {
+        background-color: #f68b1e;
+    }
+}
+</style>
