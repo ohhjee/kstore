@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('slug');
             $table->string('quantity');
             $table->string('category');
+            $table->string('image');
             $table->string('brand');
             $table->string('price');
             $table->string('description');
