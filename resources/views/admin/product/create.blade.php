@@ -6,7 +6,7 @@
         <div class="mt-[2rem]">
             <div class="text-[2rem] text-white" id="product-title">Create New Product</div>
             <div class="my-[2rem]">
-                <form action="{{ route('admin.product.store') }}" method="post"
+                <form action="{{ route('admin.product.store') }}" enctype="multipart/form-data" method="post"
                     class="bg-[#272e48] shadow p-4 grid grid-cols-2 items-start rounded gap-4" x-data="{
                         categories: [],
                         category: '',
@@ -29,6 +29,17 @@
                         }
                     }">
                     @csrf
+                    <div class="grid col-span-2">
+                        <label class="text-white mb-3" for="product_title">Product name</label>
+                        <div>
+
+                            <input type="file" class="w-full bg-transparent placeholder:text-white text-white "
+                                id="product_title" placeholder="product name" name="image">
+                            @error('title')
+                                {{ $message }}
+                            @enderror
+                        </div>
+                    </div>
                     <div class="grid">
                         <label class="text-white mb-3" for="product_title">Product name</label>
                         <div>
@@ -44,7 +55,7 @@
                         <label class="text-white mb-3" for="product_title">Product price</label>
                         <div>
                             <input type="number" class="w-full bg-transparent placeholder:text-white text-white "
-                                id="product_title" placeholder="price" name="price">
+                                id="product_title" placeholder="price" name="price" min="50000" max="1000000">
                             @error('price')
                                 {{ $message }}
                             @enderror

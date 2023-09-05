@@ -84,10 +84,17 @@ class AdminProductController extends Controller
             'description' => 'required|string',
             'category' => 'required',
             'brand' => 'required',
-            'price' => 'required|string', 'quantity' => 'required'
+            'price' => 'required|string', 'quantity' => 'required',
+            'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048'
 
         ]);
-        // dd($product);
+        $image = $request->file('image');
+        if ($image) {
+            dd("yes image exist");
+        } else {
+            dd('i  no dey part ');
+        }
+
         product::create($product);
         return redirect('admin/product');
     }
