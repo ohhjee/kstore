@@ -20,4 +20,8 @@ class product extends Model
     {
         return 'slug';
     }
+    public function cartitem()
+    {
+        return $this->hasMany(cartitem::class);
+    }
 }

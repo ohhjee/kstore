@@ -32,7 +32,7 @@
                     <div class="grid col-span-2">
                         <label class="text-white mb-3" for="product_title">Product name</label>
                         <div>
-
+                            {{-- <img src="#" id="preview"  alt=""> --}}
                             <input type="file" class="w-full bg-transparent placeholder:text-white text-white "
                                 id="product_title" placeholder="product name" name="image">
                             @error('title')

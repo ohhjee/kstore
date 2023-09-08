@@ -1,11 +1,23 @@
 <template>
+    <!-- <Head>{{ products }}</Head> -->
     <div>
         <div
             class="grid grid-cols-2 lg:grid-cols-3 gap-4 mt-[3rem] px-4 lg:px-0"
         >
             <div class="w-full col-span-2 bg-white rounded shadow">
                 <div class="grid grid-cols-3 gap-4">
-                    <div class="w-full"></div>
+                    <div class="w-full">
+                        <div v-if="loading">loading</div>
+                        <div v-else class="w-full h-full p-4">
+                            <img
+                                :src="
+                                    'http://127.0.0.1:8000/' + products?.image
+                                "
+                                class="w-full h-full rounded-md"
+                                alt=""
+                            />
+                        </div>
+                    </div>
                     <div class="col-span-2 w-full p-2">
                         <div
                             class="grid grid-cols-6 place-content-center items-center"
@@ -32,16 +44,25 @@
                         </div>
 
                         <div class="mt-2">
-                            <div class="text-[2rem] capitalize text-[#313133]">
-                                {{ product?.title }}
+                            <div
+                                class="text-[1rem] sm:text-[2rem] capitalize text-[#313133]"
+                            >
+                                {{ products?.title }}
                             </div>
                             <div>
-                                <div class="flex items-center space-x-2">
-                                    <div>Brand:</div>
-                                    <div class="text-[.7rem]">samusng</div>
-                                    <div class="border bg-"></div>
+                                <div
+                                    class="flex flex-col sm:items-center sm:flex-row sm:space-x-2"
+                                >
+                                    <div class="flex items-center">
+                                        <span class="mr-2">Brand:</span>
+                                        <span class="text-[.7rem]">
+                                            {{ products?.brand }}
+                                        </span>
+                                    </div>
+                                    <div class=""></div>
                                     <div class="text-[.7rem]">
-                                        Similar products from Samsung
+                                        Similar products from
+                                        {{ products?.brand }}
                                     </div>
                                 </div>
                             </div>
@@ -50,7 +71,10 @@
                         <!-- FLASH SALE SECTION -->
                         <div class="my-2">
                             <div class="border border-[#e61601] rounded">
-                                <div class="bg-[#e61601] px-2 py-1">
+                                <div
+                                    v-if="products?.brand == 'Samsung'"
+                                    class="bg-[#e61601] px-2 py-1"
+                                >
                                     <div
                                         class="flex items-center justify-between"
                                     >
@@ -71,7 +95,7 @@
                                         <div
                                             class="font-bold text-[1.5rem] text-[#313133]"
                                         >
-                                            ₦ 121,750
+                                            ₦{{ products?.price }}
                                         </div>
                                         <div>
                                             <s
@@ -82,12 +106,20 @@
                                         </div>
                                     </div>
                                     <div class="text-[.75rem]">
-                                        {{ product?.quantity }} items left
+                                        {{ products?.quantity }} items left
                                     </div>
                                 </div>
                             </div>
                             <div class="mt-4">
-                                <Btn type="jumia-color "> Add to cart </Btn>
+                                <!-- <form> -->
+                                <Btn
+                                    btn="jumia-color"
+                                    type="submit"
+                                    @click="check"
+                                >
+                                    Add to cart
+                                </Btn>
+                                <!-- </form> -->
                             </div>
                         </div>
                     </div>
@@ -103,7 +135,7 @@
                     <hr class="mb-2 mt-0" />
                     <div class="px-2">
                         <div
-                            v-html="product?.description"
+                            v-html="products?.description"
                             class="text-[.8rem]"
                         ></div>
                     </div>
@@ -116,16 +148,25 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import Btn from "../btn/btn.vue";
+import { Head, useForm } from "@inertiajs/vue3";
 
 export default defineComponent({
-    components: { Btn },
+    components: { Btn, Head },
     props: {
-        product: {
+        products: {
             type: Object,
         },
     },
-    setup() {
-        return {};
+    setup(props) {
+        const loading = ref();
+        const datas = useForm(props.products);
+        const check = () => {
+            console.log(props.products);
+
+            // console.log(datas);
+            datas.post(route("cart", props.products.id));
+        };
+        return { loading, check };
     },
 });
 </script>

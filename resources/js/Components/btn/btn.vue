@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button :class="['btn', type]" type="button">
+        <button :class="['btn', btn]">
             <slot />
         </button>
     </div>
@@ -11,7 +11,7 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
     props: {
-        type: {
+        btn: {
             type: String,
         },
     },

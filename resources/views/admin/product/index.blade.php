@@ -14,8 +14,11 @@
             <div class="my-[2rem]">
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ">
                     @foreach ($products as $products)
-                        <div>
-                            <div class="bg-black h-[20vh] w-full rounded"></div>
+                        <div class="text-center">
+                            <div class=" w- w-full rounded">
+                                <img src="http://localhost:8000/{{ $products->image }}" claas="h-full object-fit w-full"
+                                    alt="">
+                            </div>
                             <a href="{{ route('admin.product.edit', $products->slug) }}">
                                 {{ $products->title }}
                             </a>

@@ -16,7 +16,7 @@ class ProductController extends Controller
         return Inertia::render(
             'productview',
             [
-                'product' => $product
+                'products' => $product
             ]
         );
     }

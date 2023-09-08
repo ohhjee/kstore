@@ -1,7 +1,7 @@
 <template>
     <Head title="product"></Head>
     <authenticated-layout>
-        <ProductLink :product="product" />
+        <ProductLink :product="product" :products="products" />
         {{ product }}
     </authenticated-layout>
 </template>
@@ -17,6 +17,9 @@ export default defineComponent({
     components: { AuthenticatedLayout, HomeHeader, Head, ProductLink },
     props: {
         product: {
+            type: Object,
+        },
+        products: {
             type: Object,
         },
     },

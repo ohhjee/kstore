@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\Api\DashboardController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Api\Auth\ProductController;
+use App\Http\Controllers\Api\cartController;
 use App\Http\Controllers\Auth\Api\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\Api\DashboardController as ApiDashboardController;
 use App\Models\Category;
@@ -59,6 +60,7 @@ Route::group(['prefix' => ''], function () {
     Route::get('', [DashboardController::class, 'index']);
 });
 Route::get('/product/{slug}', [ProductController::class, 'index']);
+Route::post('/cart/{product:id}', [cartController::class, 'add'])->name('cart');
 Route::middleware('auth')->group(function () {
     Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');

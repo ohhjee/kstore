@@ -24,6 +24,7 @@
                     </Link>
                 </div>
             </div>
+
             <!-- <div class="card">
                 <div class="card-body">
                     <div class="card-image"></div>
@@ -73,6 +74,32 @@
                 </div>
             </div> -->
         </div>
+        <div
+            class="border rounded-[.4rem] bg-white space-y-[2rem] mb-[2rem] p-3 mx-3 md:mx-0"
+        >
+            <div class="grid grid-cols-4 gap-4 lg:grid-cols-6 h-full">
+                <div v-for="products in product" :key="products.id">
+                    <!-- {{ products.title }} -->
+                    <div class="oso h-full">
+                        <div class="card h-full">
+                            <Link :href="`/product/${products?.slug}`" class="">
+                                <div class="card-body">
+                                    <div class="card-image h-full border">
+                                        <img :src="products.image" alt="" />
+                                    </div>
+                                    <div
+                                        class="title text-[.6rem] sm:text-[.8rem] md:text-[1rem]"
+                                    >
+                                        {{ products?.title }}
+                                    </div>
+                                </div>
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div>
             <product-slider></product-slider>
         </div>

@@ -7,6 +7,8 @@ export default defineConfig({
         laravel({
             input: [
                 "resources/js/app.ts",
+                "resources/css/app.css",
+
                 "resources/assets/css/style.min.css",
             ],
             ssr: "resources/js/ssr.ts",

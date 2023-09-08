@@ -9,6 +9,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Validation\Rules\Enum;
+use Image;
 use Symfony\Component\Console\Input\Input;
 
 class AdminProductController extends Controller
@@ -88,13 +89,19 @@ class AdminProductController extends Controller
             'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048'
 
         ]);
-        dd($product);
-        $image = $request->file('image');
-        if ($image) {
-            dd("yes image exist");
-        } else {
-            dd('i  no dey part ');
-        }
+        // dd($product);
+        $image = uniqid() . '.' . $product['image']->getClientOriginalExtension();
+        $image_path = 'assets/product_image/' . $image;
+        // dd($image);
+        Image::make($product['image'])->resize(320, 240)->save(public_path($image_path));
+        $product['image'] = $image_path;
+
+        // if ($image) {
+        //     dd("yes image exist");
+        // } else {
+        //     dd('i  no dey part ');
+        // }
+        // dd($product);
 
         product::create($product);
         return redirect('admin/product');

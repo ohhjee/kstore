@@ -1,5 +1,5 @@
-// import './bootstrap';
-// import '../assets/css/app.css';
+import './bootstrap';
+import '../assets/css/app.css';
 
 
 import { createApp, h, DefineComponent } from 'vue';

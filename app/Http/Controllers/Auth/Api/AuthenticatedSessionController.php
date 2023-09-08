@@ -12,8 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\Rules;
-
-
+use Symfony\Component\Console\Input\Input;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -34,16 +33,15 @@ class AuthenticatedSessionController extends Controller
         $credentials = $request->validate([
             'email' => 'required|email|string|unique:users',
         ]);
-        // User::create($credentials);
+
         try {
+            $user = User::where('email', '=', Input::get('email'))->first();
+            dd($user);
             $request->session()->put("user", $credentials);
             if (empty($request->session()->get('user'))) {
             }
-            // return to_route("login");
-
         } catch (\Throwable $th) {
         }
-        // return Inertia::render('Auth/Password');
     }
 
     public function StepTwo(Request $request)
@@ -99,7 +97,8 @@ class AuthenticatedSessionController extends Controller
         $request->session()->put("user", $credentials);
         // dd($request->session()->get('user'));
         $user = $request->session()->get('user');
-        User::create($user);
+        $user_suc =    User::create($user);
+        auth()->login($user_suc);
         try {
             // dd($credentials);
 
