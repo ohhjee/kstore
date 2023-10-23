@@ -4,6 +4,9 @@ namespace App\Helper;
 
 // use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\product;
+use Illuminate\Support\Arr;
+
 
 class Carts
 {
@@ -40,7 +43,7 @@ class Carts
         $user = $request->user();
         if ($user) {
             return Cart::where('user_id', $user->id)->get()->map(
-                fn ($item) => ['product_id' => $item->product_id, 'quantity' => $item->quantity]
+                fn ($item) => ['product_id' => $item->product_id, 'quantity' => $item->quantity, 'id' => $item->id]
             );
         } else {
             return self::getCookiesCartItems();
@@ -49,7 +52,7 @@ class Carts
     public static function getCookiesCartItems()
     {
         $request = \request();
-        return json_decode($request->cookie('cart_items', ['']), true);
+        return json_decode($request->cookie('carts', '[]'), true);
     }
     public static function getCountFromItems($cartItems)
     {
@@ -80,5 +83,13 @@ class Carts
         if (!empty($newCartItems)) {
             Cart::insert($newCartItems);
         }
+    }
+    public static function getProductAndCartItems(): array|\Illuminate\Database\Eloquent\Collection
+    {
+        $cartItems = Carts::getCartItems();
+        $id = Arr::pluck($cartItems, 'product_id');
+        $products = product::get()->whereIn('id', $id);
+        $cartItems = Arr::keyBy($cartItems, 'product_id');
+        return [$products, $cartItems];
     }
 }

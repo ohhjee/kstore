@@ -2,13 +2,12 @@
     <!-- <Head>{{ products }}</Head> -->
     <div>
         <div
-            class="grid grid-cols-2 lg:grid-cols-3 gap-4 mt-[3rem] px-4 lg:px-0"
+            class="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-[3rem] px-4 lg:px-0 mb-4"
         >
-            <div class="w-full col-span-2 bg-white rounded shadow">
+            <div class="w-full col-span-3 bg-white rounded shadow">
                 <div class="grid grid-cols-3 gap-4">
                     <div class="w-full">
-                        <div v-if="loading">loading</div>
-                        <div v-else class="w-full h-full p-4">
+                        <div class="w-full h-full p-4">
                             <img
                                 :src="
                                     'http://127.0.0.1:8000/' + products?.image
@@ -38,6 +37,8 @@
                             </div>
                             <div class="grid place-content-end">
                                 <i
+                                    @click="addFavorite(products)"
+                                    :class="[]"
                                     class="fa-regular fa-heart text-[#f68b1e]"
                                 ></i>
                             </div>
@@ -106,19 +107,42 @@
                                         </div>
                                     </div>
                                     <div class="text-[.75rem]">
-                                        {{ products?.quantity }} items left
+                                        {{ products?.stock }} items left
                                     </div>
                                 </div>
                             </div>
                             <div class="mt-4">
                                 <!-- <form> -->
-                                <Btn
-                                    btn="jumia-color"
-                                    type="submit"
-                                    @click="check"
-                                >
-                                    Add to cart
-                                </Btn>
+                                <div v-if="loading">
+                                    <Btn
+                                        disabled
+                                        class="cursor-not-allowed"
+                                        btn="out-of-stock"
+                                        type="button"
+                                    >
+                                        <spinner />
+                                    </Btn>
+                                </div>
+                                <div v-else>
+                                    <Btn
+                                        v-if="products?.stock > 0"
+                                        disabled
+                                        btn="jumia-color"
+                                        type="submit"
+                                        @click="check"
+                                    >
+                                        Add to cart
+                                    </Btn>
+                                    <Btn
+                                        v-else
+                                        disabled
+                                        class="cursor-not-allowed"
+                                        btn="out-of-stock"
+                                        type="button"
+                                    >
+                                        out of stock
+                                    </Btn>
+                                </div>
                                 <!-- </form> -->
                             </div>
                         </div>
@@ -126,10 +150,10 @@
                     <!-- <div>lrem</div> -->
                 </div>
             </div>
-            <div class="w-full col-span-2 lg:col-span-1 h-[20vh] bg-green-300">
-                thid
+            <div class="w-full col-span-2 lg:col-span-1">
+                <deliveryArrive />
             </div>
-            <div class="w-full col-span-2 bg-white rounded shadow">
+            <div class="w-full col-span-3 bg-white rounded shadow">
                 <div class="">
                     <div id="title" class="p-2">product details</div>
                     <hr class="mb-2 mt-0" />
@@ -149,24 +173,34 @@
 import { defineComponent, ref } from "vue";
 import Btn from "../btn/btn.vue";
 import { Head, useForm } from "@inertiajs/vue3";
+import Spinner from "../spinner/spinner.vue";
+import deliveryArrive from "./delivery-arrive.vue";
+import store from "@/store";
 
 export default defineComponent({
-    components: { Btn, Head },
+    components: { Btn, Head, Spinner, deliveryArrive },
     props: {
         products: {
             type: Object,
         },
     },
     setup(props) {
-        const loading = ref();
+        const loading = ref(false);
         const datas = useForm(props.products);
-        const check = () => {
-            console.log(props.products);
-
-            // console.log(datas);
-            datas.post(route("cart", props.products.id));
+        // store.dispatch("addFavourite");
+        const addFavorite = (product: number[]) => {
+            // TODO:: ADD FAVORITE TO LS
+            // localStorage.setItem("fav", JSON.stringify([product.id]));
         };
-        return { loading, check };
+        const check = async () => {
+            loading.value = true;
+            await datas.post(route("cart", props.products?.id), {
+                onFinish: () => {
+                    loading.value = false;
+                },
+            });
+        };
+        return { loading, check, datas, addFavorite };
     },
 });
 </script>

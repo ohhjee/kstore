@@ -1,7 +1,7 @@
 <template>
     <div>
         <div
-            class="border rounded-[.4rem] bg-white space-y-[2rem] mb-[2rem] p-3 mx-3 md:mx-0"
+            class="border rounded-[.4rem] bg-white space-y-[2rem] mb-[2rem] p-3 sm:mx-3 md:mx-0"
         >
             <div class="grid grid-cols-4 gap-4 lg:grid-cols-6">
                 <div v-for="products in products" :key="products.id">
@@ -14,7 +14,7 @@
                                         <img :src="products.image" alt="" />
                                     </div>
                                     <div
-                                        class="title text-[.6rem] sm:text-[.8rem] md:text-[1rem]"
+                                        class="title text-[.6rem] flex sm:text-[.8rem] md:text-[1rem]"
                                     >
                                         {{ products?.title }}
                                     </div>
@@ -75,22 +75,29 @@
             </div> -->
         </div>
         <div
-            class="border rounded-[.4rem] bg-white space-y-[2rem] mb-[2rem] p-3 mx-3 md:mx-0"
+            class="border bg-white space-y-[2rem] mb-[2rem] p-3 sm:mx-3 md:mx-0 rounded-[4px]"
         >
             <div class="grid grid-cols-4 gap-4 lg:grid-cols-6 h-full">
                 <div v-for="products in product" :key="products.id">
                     <!-- {{ products.title }} -->
                     <div class="oso h-full">
-                        <div class="card h-full">
+                        <div class="card">
                             <Link :href="`/product/${products?.slug}`" class="">
                                 <div class="card-body">
-                                    <div class="card-image h-full border">
-                                        <img :src="products.image" alt="" />
+                                    <div class="card-image h-[175px] border">
+                                        <img
+                                            :src="products.image"
+                                            alt=""
+                                            class="h-full"
+                                        />
                                     </div>
                                     <div
-                                        class="title text-[.6rem] sm:text-[.8rem] md:text-[1rem]"
+                                        class="title text-center flex md:block md:text-start text-[.6rem] sm:text-[.8rem] md:text-[1rem]"
                                     >
                                         {{ products?.title }}
+                                        <!-- {{}} -->
+                                        <br />
+                                        ₦ {{ products?.price }}
                                     </div>
                                 </div>
                             </Link>
@@ -264,26 +271,28 @@ export default defineComponent({
 .oso {
     &:hover {
         transform: scale(1.05);
-        box-shadow: 0px 0px 10px lightgray;
+        box-shadow: 0px 0px 5px lightgray;
+        //border-radius: ;
     }
 }
 .card {
     display: flex;
     .card-body {
-        border-radius: 5px;
+        //border-radius: 5px;
         align-items: center;
         justify-content: center;
         flex-wrap: wrap;
         flex: 100%;
         display: flex;
         .card-image {
-            border-radius: 10px;
+            //  border-radius: 10px;
             width: 100%;
-            border-radius: 10px;
+            //border-radius: 10px;
         }
         .title {
-            text-align: center;
-            display: flex;
+            text-align: start;
+            width: 100%;
+            //display: flex;
             justify-content: center;
             align-self: center;
             text-transform: capitalize;

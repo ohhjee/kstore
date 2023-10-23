@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\Auth\ResetPasswordController;
+use App\Http\Controllers\Api\Auth\verifyMail;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
@@ -23,4 +25,16 @@ Route::middleware('guest')->group(function () {
     Route::post('login/step-two', [AuthenticatedSessionController::class, 'StepTwo'])->name('login.step.two');
     Route::post('login/step-three', [AuthenticatedSessionController::class, 'StepThree'])->name('login.step.three');
     Route::post('login', [AuthenticatedSessionController::class, 'store'])->name('login.store');
+
+    Route::get('/verifyMail', [verifyMail::class, 'index'])->name('forget-password');
+    Route::post('/checkMail', [verifyMail::class, 'checkMail'])->name('mailVerification');
+    Route::get('/resetPassword', [ResetPasswordController::class, 'index'])->name("resetPassword");
+    Route::put('/resetPassword', [ResetPasswordController::class, 'checkMail'])->name("updatePassword");
+
+    // Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+    // Route::post('logout', function () {
+    //     dd('hey');
+    //     auth()->logout();
+    //     return Inertia::location('/');
+    // });
 });

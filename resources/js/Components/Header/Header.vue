@@ -8,7 +8,7 @@
       />
     </div>
     <div class="bg-gray-200">
-      <div class="container mx-auto py-1">
+      <div class="container mx-auto py-1 px-4 md:px-0">
         <div class="flex items-center justify-between">
           <div>
             <Link href="/" class="flex items-center justify-center text-[#f68b1e]">

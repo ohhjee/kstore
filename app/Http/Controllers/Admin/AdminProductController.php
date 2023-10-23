@@ -85,7 +85,7 @@ class AdminProductController extends Controller
             'description' => 'required|string',
             'category' => 'required',
             'brand' => 'required',
-            'price' => 'required|string', 'quantity' => 'required',
+            'price' => 'required|string', 'stock' => 'required',
             'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048'
 
         ]);

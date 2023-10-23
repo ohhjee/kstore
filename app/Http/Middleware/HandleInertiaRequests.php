@@ -2,9 +2,11 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Http\Request;
+use App\Models\Cart;
+use App\Models\Address;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
+use Illuminate\Http\Request;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -30,13 +32,24 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        // $userAddress = $request->user()->id;
+
         return array_merge(parent::share($request), [
             'flash' => [
-                'message' => session('message')
+                'message' => session('message'),
+                'mailVerification' => fn () => $request->session()->get('error'),
+                'success' => fn () => $request->session()->get('success'),
+                'errorM' => fn () => $request->session()->get('errorM'),
+                'notification' => fn () => $request->session()->get('notification'),
+                'netWork' => fn () => $request->session()->get('netWork')
+
             ],
+
             'auth' => [
                 'isLoggedIn' => auth()->check(),
-                'user' => $request->user()
+                'user' => $request->user(),
+                // "address" => Address::get()->whereIn('user_id', $userAddress)->first()
+
             ],
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class product extends Model
 {
     use HasFactory, HasSlug;
-    protected $fillable = ["title", "price", "description", "quantity", "category", 'brand', 'image'];
+    protected $fillable = ["title", "price", "description", "stock", "category", 'brand', 'image'];
 
     public function getSlugOptions(): SlugOptions
     {

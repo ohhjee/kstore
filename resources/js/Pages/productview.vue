@@ -1,6 +1,6 @@
 <template>
     <Head title="product"></Head>
-    <authenticated-layout>
+    <authenticated-layout :user="user" :cart="cart">
         <ProductLink :product="product" :products="products" />
         {{ product }}
     </authenticated-layout>
@@ -22,8 +22,17 @@ export default defineComponent({
         products: {
             type: Object,
         },
+        user: {
+            type: Object,
+        },
+        cart: {
+            type: Object,
+            required: true,
+        },
     },
     setup(props) {
+        console.log(typeof props.user);
+
         return {};
     },
 });

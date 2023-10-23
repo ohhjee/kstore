@@ -1,5 +1,5 @@
 <template>
-    <div class="container mx-auto my-[2rem] px-[3rem] sm:px-0">
+    <div class="container mx-auto my-[2rem] sm:px-0">
         <div
             class="relative flex items-center justify-between md:space-x-3"
             id="show_on_1115_width"

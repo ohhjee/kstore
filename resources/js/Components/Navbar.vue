@@ -4,21 +4,26 @@
         <nav class="bg-white shadow-[0px_0px_5px_0px] shadow-slate-300 w-full">
             <div class="container mx-auto">
                 <div
-                    class="max-w-screen-xl flex flex-wrap items-center mx-auto space-x-2 p-4"
+                    class="border justify-between flex flex-wrap items-center mx-auto md:space-x-2 p-4"
                 >
-                    <Link href="/" class="flex items-center w-[20%]">
-                        <img
-                            src="../../assets/images/header/download.png"
-                            class="h-4 mr-[5rem]"
-                            alt="Flowbite Logo"
-                        />
-                    </Link>
-                    <!-- {{ $page.props.auth.user }} -->
+                    <div class="flex">
+                        <div class="md:hidden">
+                            <Bars3Icon class="h-5 w-5 mr-1" />
+                        </div>
+                        <Link href="/" class="flex items-center w-full">
+                            <img
+                                src="../../assets/images/header/download.png"
+                                class="h-4 mr-[4rem]"
+                                alt="Flowbite Logo"
+                            />
+                        </Link>
+                    </div>
+
                     <div
-                        class="items-center justify-start flex md:order-1 w-9/12"
+                        class="items-center justify-end flex md:order-1 md:w-9/12"
                         id="navbar-cta"
                     >
-                        <div class="w-8/12">
+                        <div class="w-8/12 hidden md:block">
                             <form
                                 class="flex items-center justify-center w-full"
                             >
@@ -56,22 +61,23 @@
                                         class="flex w-full px-[16px] py-[12px] items-center justify-center rounded-md text-sm font-medium hover:bg-opacity-30 focus:outline-none"
                                     >
                                         <div
+                                            class="flex items-center"
                                             v-if="!$page.props.auth.isLoggedIn"
                                         >
                                             <UserIcon
                                                 class="ml-2 mr-2 h-5 w-5 text-black hover:text-violet-100"
                                                 aria-hidden="true"
                                             />
-                                            Account
+                                            <span class="hidden md:block">
+                                                Account
+                                            </span>
                                         </div>
-                                        <div v-else>
-                                            {{
-                                                $page.props.auth.user
-                                                    ?.first_name
-                                            }}
-                                            {{
-                                                $page.props.auth.user?.last_name
-                                            }}
+                                        <div
+                                            v-else
+                                            class="whitespace-nowrap mx-[10px]"
+                                        >
+                                            {{ user?.first_name }}
+                                            {{ user?.last_name }}
                                         </div>
                                     </MenuButton>
                                 </div>
@@ -98,7 +104,6 @@
                                                     comp="profile"
                                                     class="flex w-full items-center rounded-md px-2 justify-center bg-[#f68b1e] text-white py-2 text-sm text-center border"
                                                 >
-                                                    <!-- <UserIcon class="mr-2 h-5 w-5" aria-hidden="true" /> -->
                                                     Sign in
                                                 </Link>
                                             </MenuItem>
@@ -106,15 +111,17 @@
                                         <div class="px-1 py-1" v-else>
                                             <div class="px-1 py-1">
                                                 <MenuItem>
-                                                    <Link
-                                                        href="#"
-                                                        name="profile"
-                                                        comp="profile"
-                                                        class="flex w-full items-center rounded-md px-2 justify-center bg-[#f68b1e] text-white py-2 text-sm text-center border"
+                                                    <Links
+                                                        href="/logout"
+                                                        as="button"
+                                                        name="logout"
+                                                        method="get"
+                                                        type="button"
+                                                        comp="logout"
+                                                        class="flex w-full items-center rounded-md px-2 justify-center bg-[#f68b1e] !text-white py-2 text-sm text-center border"
                                                     >
-                                                        <!-- <UserIcon class="mr-2 h-5 w-5" aria-hidden="true" /> -->
                                                         logout
-                                                    </Link>
+                                                    </Links>
                                                 </MenuItem>
                                             </div>
                                             <MenuItem>
@@ -134,7 +141,7 @@
 
                                             <MenuItem>
                                                 <Link
-                                                    href="/profile"
+                                                    href="/order"
                                                     class="flex w-full items-center capitalize rounded-md text-black px-2 py-2 text-sm"
                                                 >
                                                     <div class="w-6 h-6 mr-2">
@@ -161,31 +168,12 @@
                                                 </Link>
                                             </MenuItem>
                                         </div>
-
-                                        <!-- <MenuItem>
-                      <Link
-                        href="/logout"
-                        as="button"
-                        name="logout"
-                        method="get"
-                        type="button"
-                        comp="logout"
-                        class="flex w-full items-center rounded-md text-black px-2 py-2 text-sm"
-                      >
-                        <div class="w-6 h-6 mr-2">
-                          <ArrowLeftOnRectangleIcon
-                            class="w-full h-full mr-2 text-black"
-                          />
-                        </div>
-                        logout
-                      </Link>
-                    </MenuItem> -->
                                     </MenuItems>
                                 </transition>
                             </Menu>
                         </div>
                         <div
-                            class="z-99999 relative flex items-center justify-center text-right"
+                            class="z-99999 relative hidden md:flex items-center justify-center text-right"
                         >
                             <Menu
                                 as="div"
@@ -222,8 +210,6 @@
                                                 :href="link.href"
                                                 as="a"
                                             >
-                                                <!-- <div></div> -->
-
                                                 {{ link.link }}
                                             </MenuItem>
                                         </div>
@@ -252,23 +238,55 @@
                             </Menu>
                         </div>
 
-                        <div class="flex items-center justify-center">
+                        <Link
+                            href="/cart"
+                            class="flex items-center justify-center relative"
+                        >
+                            <div
+                                v-if="Object.keys(cart).length > 0"
+                                class="bg-[#f68b1e] flex items-center justify-center rounded-full absolute top-[-10px] left-0 h-4 w-4"
+                            >
+                                <span class="text-[.7rem] text-white">
+                                    {{ Object.keys(cart).length }}
+                                </span>
+                            </div>
                             <ShoppingBagIcon class="w-4 h-4" />
-                            <p>cart</p>
-                        </div>
-                        <!-- <ul
-                  class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
-                >
-                  <li>
-                    <Links href="/" name="Home" comp="Home" />
-                  </li>
-                  <li>
-                    <Links href="/test" name="Test" comp="Test" />
-                  </li>
-                  <li>
-                    <Links href="/about" name="About" comp="about" />
-                  </li>
-                </ul> -->
+                            <p class="hidden md:block">cart</p>
+                        </Link>
+                    </div>
+
+                    <div id="mobile_form" class="w-full md:hidden relative">
+                        <form class="flex items-center justify-center w-full">
+                            <div
+                                class="flex items-center w-full border-gray-400 justify-center relative"
+                            >
+                                <div class="px-4 absolute left-0">
+                                    <MagnifyingGlassIcon class="w-6 h-6" />
+                                </div>
+                                <input
+                                    type="text"
+                                    class="text-[1rem] w-full truncate whitespace-nowrap pl-[2.8rem] focus:shadow-none focus:ring-0 focus:outline-none rounded-3xl"
+                                    placeholder="Search product and brands categories"
+                                />
+                                <!-- <input
+                                    type="text"
+                                    class="w-full rounded-3xl"
+                                    placeholder="Search product brands and categories"
+                                /> -->
+                            </div>
+                        </form>
+                        <!-- <form>
+                            <div class="relative">
+                                <div class="px-4">
+                                    <MagnifyingGlassIcon class="w-6 h-6" />
+                                </div>
+                                <input
+                                    type="text"
+                                    class="w-full rounded-3xl"
+                                    placeholder="Search product brands and categories"
+                                />
+                            </div>
+                        </form> -->
                     </div>
                 </div>
             </div>
@@ -278,7 +296,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import { Link } from "@inertiajs/vue3";
+import { Link, router, useForm } from "@inertiajs/vue3";
 import {
     ShoppingCartIcon,
     ArrowLeftOnRectangleIcon,
@@ -289,12 +307,22 @@ import {
     QuestionMarkCircleIcon,
     ChatBubbleBottomCenterTextIcon,
     ShoppingBagIcon,
+    Bars3Icon,
 } from "@heroicons/vue/24/outline";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import Links from "./Links.vue";
 
 export default defineComponent({
-    props: { user: { type: Array } },
+    props: {
+        user: { type: Object },
+        cart: {
+            type: Object,
+            required: true,
+        },
+        // count: {
+        //     type: Object,
+        // },
+    },
     components: {
         Link,
         Links,
@@ -311,14 +339,25 @@ export default defineComponent({
         QuestionMarkCircleIcon,
         ChatBubbleBottomCenterTextIcon,
         ShoppingBagIcon,
+        Bars3Icon,
     },
     setup(props) {
-        // console.log();
+        // console.log(props.count);
+        // const getCartLength = Object.entries(props.cart).map(
+        //     (res) => res.length
+        // );
+        // console.log(getCartLength);
+
         interface Islink {
             id: number;
             link: string;
             href: string;
         }
+
+        // const searchForm = useForm();
+
+        const search = ref(null);
+        const searched = () => {};
 
         const links = ref<Islink[]>([
             { id: 1, href: "#", link: "help center" },
@@ -334,8 +373,15 @@ export default defineComponent({
 
             console.log("working");
         };
+        const logout = () => {
+            // console.log("hey");
 
-        return { navbar, links };
+            router.post("/auth/logout");
+        };
+        // const number = Object.entries(props.count);
+        // console.log("cart-Number", number);
+
+        return { navbar, links, logout };
     },
 });
 </script>

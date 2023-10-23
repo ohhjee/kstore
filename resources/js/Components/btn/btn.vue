@@ -34,5 +34,9 @@ export default defineComponent({
     &.jumia-color {
         background-color: #f68b1e;
     }
+    &.out-of-stock {
+        background-color: gray;
+        cursor: not-allowed;
+    }
 }
 </style>

@@ -143,6 +143,10 @@
                             v-if="form.errors.password_confirmation"
                             >{{ form.errors.password_confirmation }}</small
                         >
+
+                        <div class="my-2 text-right text-[#f68b1e] capitalize">
+                            <Link href="verifyMail"> forget Password? </Link>
+                        </div>
                     </div>
                     <div class="mt-[1rem]">
                         <Button

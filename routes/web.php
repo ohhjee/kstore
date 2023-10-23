@@ -3,6 +3,7 @@
 use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 use App\Http\Controllers\Api\Auth\UserProfile;
 use App\Http\Controllers\Auth\Api\DashboardController;
@@ -10,9 +11,12 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Api\Auth\ProductController;
 use App\Http\Controllers\Api\cartController;
+use App\Http\Controllers\Api\navController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Auth\Api\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\Api\DashboardController as ApiDashboardController;
 use App\Models\Category;
+use Symfony\Contracts\Service\Attribute\Required;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,11 +64,21 @@ Route::group(['prefix' => ''], function () {
     Route::get('', [DashboardController::class, 'index']);
 });
 Route::get('/product/{slug}', [ProductController::class, 'index']);
+Route::get('/product', [ProductController::class, 'index']);
+
+Route::resource('cart', cartController::class);
 Route::post('/cart/{product:id}', [cartController::class, 'add'])->name('cart');
+Route::delete('/cart/{product:id}', [cartController::class, 'destroy'])->name('cart.delete');
+
+
+Route::post('/checkout', [cartController::class, 'checkout'])->name('checkout');
+
 Route::middleware('auth')->group(function () {
     Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
     Route::get("profile", [UserProfile::class, 'create']);
     Route::put("profile", [UserProfile::class, 'update'])->name('profile.update');
+    require __DIR__ . '/address.php';
 });
+require __DIR__ . '/payment.php';
 require __DIR__ . '/auth.php';

@@ -7,12 +7,16 @@ use App\Models\User;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Validation\Rules;
+use App\Http\Requests\Auth\LoginRequest;
 use Symfony\Component\Console\Input\Input;
+use App\Http\Requests\Auth\LoginUserRequest;
+
+use function PHPUnit\Framework\returnSelf;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -26,21 +30,21 @@ class AuthenticatedSessionController extends Controller
         ]);
     }
 
-    public function StepOne(Request $request)
+    public function StepOne(Request $request, User $user)
     {
         $request->session()->get('user');
-
         $credentials = $request->validate([
-            'email' => 'required|email|string|unique:users',
+            'email' => 'required|email:rfc|string',
         ]);
+        $request->session()->put("user", $credentials);
+        if (User::where('email', $credentials['email'])->exists()) {
+        } else {
 
-        try {
-            $user = User::where('email', '=', Input::get('email'))->first();
-            dd($user);
-            $request->session()->put("user", $credentials);
-            if (empty($request->session()->get('user'))) {
+            try {
+                if (empty($request->session()->get('user'))) {
+                }
+            } catch (\Throwable $th) {
             }
-        } catch (\Throwable $th) {
         }
     }
 
@@ -49,16 +53,26 @@ class AuthenticatedSessionController extends Controller
         $request->session()->get('user');
 
         $credentials = $request->validate([
-            'email' => 'required|email|string|unique:users',
+            'email' => 'required|email|string',
             'password' =>  ['required', 'confirmed', Rules\Password::defaults()]
         ]);
-        try {
-            $request->session()->put("user", $credentials);
-            if (!empty($request->session()->get('user'))) {
-                $request->session()->get('user');
-                return to_route("login");
+        if (Auth::attempt($credentials)) {
+            Auth::user();
+        }
+        //  else if (!Auth::attempt($credentials)) {
+        //     dd('error in password');
+        // }
+        else {
+
+
+            try {
+                $request->session()->put("user", $credentials);
+                if (!empty($request->session()->get('user'))) {
+                    $request->session()->get('user');
+                    return to_route("login");
+                }
+            } catch (\Throwable $th) {
             }
-        } catch (\Throwable $th) {
         }
     }
     public function StepThree(Request $request)
@@ -105,13 +119,16 @@ class AuthenticatedSessionController extends Controller
         } catch (\Throwable $th) {
         }
     }
+
     public function destroy(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
 
+        // dd('hey');
         $request->session()->regenerateToken();
+        // auth()->logout();
 
         return redirect('/');
     }

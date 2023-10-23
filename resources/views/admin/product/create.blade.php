@@ -198,7 +198,7 @@
                         <label class="text-white mb-3" for="product_title">quantity</label>
                         <div>
                             <input type="number" class="w-full bg-transparent placeholder:text-white text-white "
-                                id="quantity" placeholder="quantity" min="1" max="100" name="quantity">
+                                id="quantity" placeholder="quantity" min="1" max="100" name="stock">
                             @error('price')
                                 {{ $message }}
                             @enderror
