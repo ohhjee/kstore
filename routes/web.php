@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\Auth\UserProfile;
 use App\Http\Controllers\Auth\Api\DashboardController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminProductController;
+use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Api\Auth\ProductController;
 use App\Http\Controllers\Api\cartController;
 use App\Http\Controllers\Api\navController;
@@ -38,6 +39,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 'index' => 'dashboard'
             ]
         ]);
+        Route::resource('/user', AdminUserController::class, [
+            'names' => [
+                'index' => 'user',
+                'destroy' => 'deletes',
+            ]
+        ]);
+        Route::post('/user/{id}', [AdminUserController::class, 'restore'])->name('restore');
+
         Route::group(['prefix' => 'product'], function () {
             Route::get('/', [AdminProductController::class, 'index'])->name('product');
             Route::get('categories', [AdminProductController::class, 'getCate']);
