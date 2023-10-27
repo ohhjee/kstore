@@ -28,18 +28,25 @@ class PaymentController extends Controller
 
     public function redirectToGateway(Request $request)
     {
+        // dd($request->collect());
         // dd($this->paystack->getAuthorizationUrl()->redirectNow());
         try {
 
-            return $this->paystack->getAuthorizationUrl()->redirectNow();
+            $pay = collect($this->paystack->getAuthorizationUrl())->toArray();
+            // return response()->json(['pay' => $pay]);
+            // dd($pay['url']);
+            // return redirect()->away($pay['url']);
+            return Inertia::location($pay['url']);
         } catch (\Exception $e) {
             return Redirect::back()->withMessage(['msg' => 'The paystack token has expired. Please refresh the page and try again.', 'type' => 'error']);
         }
     }
     public function handleGatewayCallback()
     {
-        // dd($this->paystack->genTranxRef());
 
+        $pays = collect($this->paystack->genTranxRef());
+        dd($pays);
+        return Inertia::render('checkout/checkout');
         $paymentDetails = $this->paystack->getPaymentData();
 
         dd($paymentDetails);

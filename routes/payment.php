@@ -8,4 +8,4 @@ use Illuminate\Support\Facades\Route;
 
 // Route::get('/pay', [PaymentController::class, 'index'])->name('pay');
 Route::post('/pay', [PaymentController::class, 'redirectToGateway'])->name('pay');
-Route::get('/payment/callback', [PaymentController::class, 'handleGatewayCallback']);
+Route::get('/payment', [PaymentController::class, 'handleGatewayCallback']);

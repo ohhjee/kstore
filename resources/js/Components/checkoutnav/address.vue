@@ -434,7 +434,7 @@ export default defineComponent({
 
         const submitForm = async () => {
             loading.value = true;
-            await addressForm.post(route("checkout"), {
+            await addressForm.post(route("checkouts"), {
                 onFinish: () => {
                     loading.value = false;
                 },

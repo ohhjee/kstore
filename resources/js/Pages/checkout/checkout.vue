@@ -281,6 +281,9 @@ export default defineComponent({
             amount: props.total * 100,
             email: props.user?.email,
             reference: props.reference,
+            first_name: props.user?.first_name,
+            last_name: props.user?.last_name,
+            phone: props.user?.phone,
         });
         onMounted(() => {
             // console.log(props.reference);

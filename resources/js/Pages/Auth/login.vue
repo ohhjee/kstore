@@ -120,32 +120,35 @@
                             v-if="form.errors.password"
                             >{{ form.errors.password }}</small
                         >
-
-                        <div class="relative z-0 w-full group mt-4">
-                            <label
-                                for="first_name"
-                                class="font-bold flex items-center text-[.8rem] absolute h-full px-1 group-focus-within:text-[.7rem] transition-all duration-[300ms] group-focus-within:bg-gray-100 group-focus-within:h-fit group-focus-within:-top-[.5rem] top-0 left-3 w-auto group-focus-within:text-[#f68b1e]"
-                            >
-                                Repeat Password*
-                            </label>
-
-                            <input
-                                :type="type"
-                                name="password"
-                                id="con_password"
-                                v-model="form.password_confirmation"
-                                class="h-[56px] border py-55-rem bg-transparent text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-[#f68b1e] border-[#f68b1e] block w-full p-2.5"
-                                autofocus
-                            />
-                        </div>
-                        <small
-                            class="flex items-center justify-center mt-2 text-red-500"
-                            v-if="form.errors.password_confirmation"
-                            >{{ form.errors.password_confirmation }}</small
+                        <div
+                            v-if="$page.props.flash.emailTrue"
+                            class="my-2 text-right text-[#f68b1e] capitalize"
                         >
-
-                        <div class="my-2 text-right text-[#f68b1e] capitalize">
                             <Link href="verifyMail"> forget Password? </Link>
+                        </div>
+                        <div v-if="!$page.props.flash.emailTrue">
+                            <div class="relative z-0 w-full group mt-4">
+                                <label
+                                    for="first_name"
+                                    class="font-bold flex items-center text-[.8rem] absolute h-full px-1 group-focus-within:text-[.7rem] transition-all duration-[300ms] group-focus-within:bg-gray-100 group-focus-within:h-fit group-focus-within:-top-[.5rem] top-0 left-3 w-auto group-focus-within:text-[#f68b1e]"
+                                >
+                                    Repeat Password*
+                                </label>
+
+                                <input
+                                    :type="type"
+                                    name="password"
+                                    id="con_password"
+                                    v-model="form.password_confirmation"
+                                    class="h-[56px] border py-55-rem bg-transparent text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-[#f68b1e] border-[#f68b1e] block w-full p-2.5"
+                                    autofocus
+                                />
+                            </div>
+                            <small
+                                class="flex items-center justify-center mt-2 text-red-500"
+                                v-if="form.errors.password_confirmation"
+                                >{{ form.errors.password_confirmation }}</small
+                            >
                         </div>
                     </div>
                     <div class="mt-[1rem]">

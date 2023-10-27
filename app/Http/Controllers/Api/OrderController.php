@@ -35,7 +35,7 @@ class OrderController extends Controller
         // $getUserAddress = Address::get()->whereIn('user_id', $userAddress)->first();
         // return [$products, $cartItems];
         $reference = $this->paystack->genTranxRef();
-        dd($reference);
+        // dd($reference);
 
         $total = 0;
         foreach ($products as $product) {

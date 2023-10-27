@@ -36,8 +36,10 @@ class AuthenticatedSessionController extends Controller
         $credentials = $request->validate([
             'email' => 'required|email:rfc|string',
         ]);
+        // dd(User::where('email', $credentials['email'])->exists());
         $request->session()->put("user", $credentials);
-        if (User::where('email', $credentials['email'])->exists()) {
+        if (User::where('email', $credentials['email'])->withTrashed()->exists()) {
+            return back()->with(['emailTrue' => true]);
         } else {
 
             try {
@@ -52,19 +54,23 @@ class AuthenticatedSessionController extends Controller
     {
         $request->session()->get('user');
 
-        $credentials = $request->validate([
+
+        $LoginCredentials = $request->validate([
             'email' => 'required|email|string',
-            'password' =>  ['required', 'confirmed', Rules\Password::defaults()]
+            'password' =>  ['required']
         ]);
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($LoginCredentials)) {
+
             Auth::user();
         }
         //  else if (!Auth::attempt($credentials)) {
         //     dd('error in password');
         // }
         else {
-
-
+            $credentials = $request->validate([
+                'email' => 'required|email|string',
+                'password' =>  ['required', 'confirmed', Rules\Password::defaults()]
+            ]);
             try {
                 $request->session()->put("user", $credentials);
                 if (!empty($request->session()->get('user'))) {

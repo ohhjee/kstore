@@ -80,9 +80,9 @@ Route::post('/cart/{product:id}', [cartController::class, 'add'])->name('cart');
 Route::delete('/cart/{product:id}', [cartController::class, 'destroy'])->name('cart.delete');
 
 
-Route::post('/checkout', [cartController::class, 'checkout'])->name('checkout');
 
 Route::middleware('auth')->group(function () {
+    Route::post('checkout', [cartController::class, 'checkout'])->name('checkout');
     Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
     Route::get("profile", [UserProfile::class, 'create']);

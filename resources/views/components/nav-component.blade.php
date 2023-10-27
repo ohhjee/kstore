@@ -60,7 +60,7 @@
             <li>
 
                 <form action="{{ route('admin.logouts') }}" method="get">
-
+                    
                     @csrf
                     <x-formbtn>
                         logout
