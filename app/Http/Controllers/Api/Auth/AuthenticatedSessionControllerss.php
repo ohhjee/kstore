@@ -80,7 +80,7 @@ class AuthenticatedSessionController extends Controller
             'email' => 'email|string|exists:users,email',
 
         ]);
-        dd($credentials);
+        // dd($credentials);
     }
     public function destroy(Request $request): RedirectResponse
     {

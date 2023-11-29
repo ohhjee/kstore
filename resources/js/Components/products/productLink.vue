@@ -96,7 +96,11 @@
                                         <div
                                             class="font-bold text-[1.5rem] text-[#313133]"
                                         >
-                                            ₦{{ products?.price }}
+                                            {{
+                                                nigeria
+                                                    .format(products?.price)
+                                                    .replace(/(\.|,)00$/g, "")
+                                            }}
                                         </div>
                                         <div>
                                             <s
@@ -129,7 +133,7 @@
                                         disabled
                                         btn="jumia-color"
                                         type="submit"
-                                        @click="check"
+                                        @click="addToCart"
                                     >
                                         Add to cart
                                     </Btn>
@@ -182,25 +186,30 @@ export default defineComponent({
     props: {
         products: {
             type: Object,
+            required: true,
         },
     },
     setup(props) {
         const loading = ref(false);
         const datas = useForm(props.products);
-        // store.dispatch("addFavourite");
+        const nigeria = new Intl.NumberFormat("en-NG", {
+            style: "currency",
+            currency: "NGN",
+        });
+
         const addFavorite = (product: number[]) => {
             // TODO:: ADD FAVORITE TO LS
             // localStorage.setItem("fav", JSON.stringify([product.id]));
         };
-        const check = async () => {
+        const addToCart = async () => {
             loading.value = true;
-            await datas.post(route("cart", props.products?.id), {
+            await datas.post(route("cart.addToCart", props.products?.id), {
                 onFinish: () => {
                     loading.value = false;
                 },
             });
         };
-        return { loading, check, datas, addFavorite };
+        return { loading, addToCart, datas, addFavorite, nigeria };
     },
 });
 </script>

@@ -1,25 +1,17 @@
 <template>
     <div class="mt-4">
-        <!-- <div v-if="Object.keys(cart).length >= 1">
-            {{ product }}
-        </div>
-        <div v-else>nortin</div> -->
-        <div class="mb-4" v-if="Object.keys(cart).length >= 1">
+        <div class="mb-4" v-if="cart.length >= 1">
             <div class="rounded grid md:grid-cols-4 gap-4 relative">
                 <div class="col-span-3 gap-y-4 grid">
-                    <!-- cart-> ({{ cart }})
-                    <br />
-                    product ({{ product }}) -->
-
                     <div
                         class="gap-4 bg-white p-4"
-                        v-for="carts in product"
-                        :key="carts.id"
+                        v-for="products in cart"
+                        :key="products.id"
                     >
                         <div class="grid grid-cols-2 md:grid-cols-9 gap-4">
                             <div class="h-[15vh] md:order-1">
                                 <img
-                                    :src="carts?.image"
+                                    :src="products?.product.image"
                                     class="h-full w-full col-span-2 object-left object-cover"
                                     alt=""
                                 />
@@ -28,7 +20,7 @@
                                 class="order-3 md:order-2 col-span-1 md:col-span-6 h-fit"
                             >
                                 <div>
-                                    {{ carts?.description }}
+                                    {{ products?.product.description }}
                                 </div>
                                 <div class="text-[.7rem] text-[#f68b1e]">
                                     Few units left
@@ -38,7 +30,7 @@
                                 class="col-span-1 md:col-span-2 text-end md:order-3"
                             >
                                 <!-- PRODUCT PRICE -->
-                                {{ nigeria.format(carts?.price) }}
+                                {{ nigeria.format(products?.product.price) }}
                             </div>
                         </div>
                         <!-- DELETE ITEM FRO CART -->
@@ -52,37 +44,55 @@
                                     >remove</span
                                 >
                             </div>
-                            <div class="text-end">
-                                <form class="flex items-center justify-end">
+                            <div class="text-end flex items-center justify-end">
+                                <form
+                                    class=""
+                                    @click.prevent="
+                                        reduceQuantity(products.product_id)
+                                    "
+                                >
+                                    <div v-if="loading">
+                                        <Input
+                                            disabled
+                                            class="cursor-not-allowed"
+                                            btn="out-of-stock"
+                                            type="button"
+                                        >
+                                            <spinner />
+                                        </Input>
+                                    </div>
+                                    <div
+                                        v-else-if="
+                                            products.quantity <= 1 &&
+                                            products.product_id
+                                        "
+                                    >
+                                        <button
+                                            disabled
+                                            class="text-[.8em] bg-[gray] cursor-not-allowed h-6 w-6 rounded-[3px] text-white"
+                                        >
+                                            <MinusIcon
+                                                class="w-3 flex items-center justify-center h-3 mx-auto"
+                                            />
+                                        </button>
+                                    </div>
                                     <button
+                                        v-else
                                         class="text-[.8em] bg-[#f68b1e] h-6 w-6 rounded-[3px] text-white"
                                     >
                                         <MinusIcon
                                             class="w-3 flex items-center justify-center h-3 mx-auto"
                                         />
                                     </button>
-
-                                    <div>
-                                        <!-- <input
-                                            type="text"
-                                            class="text-center"
-                                            :value="carter.quantity"
-                                            name=""
-                                            id=""
-                                        /> -->
-                                        <!-- {{ getProductQuantity(carts.id) }} -->
-                                    </div>
-                                    <!-- {{ carts.id }} -->
-                                    <!-- <div v-for="qs in quantity" :key="qs.id">
-                                        <div
-                                            v-for="(qin, index) in qs"
-                                            :key="index"
-                                        >
-                                            {{ qin }}
-                                        </div>
-                                        {{ qs }}
-                                    </div> -->
-                                    <!-- {{ quantity }} -->
+                                </form>
+                                <div class="px-3">
+                                    {{ products.quantity }}
+                                </div>
+                                <form
+                                    @click.prevent="
+                                        increaseQuantity(products.product_id)
+                                    "
+                                >
                                     <button
                                         class="text-[.8em] bg-[#f68b1e] h-6 w-6 rounded-[3px] text-white"
                                     >
@@ -97,7 +107,9 @@
                             <Modal>
                                 <deleteModalVue
                                     @cancel="cancel"
-                                    @removeCart="removeCart(carts?.id)"
+                                    @removeCart="
+                                        removeCart(products.product_id)
+                                    "
                                     :cart="cart"
                                     :class="[
                                         showModal
@@ -121,7 +133,9 @@
                             class="p-2 flex justify-between items-center text-[.8rem] lg:text-[1rem]"
                         >
                             <div class="text-capitalize">subtotal</div>
-                            {{ nigeria.format(total) }}
+                            {{
+                                nigeria.format(total).replace(/(\.|,)00$/g, "")
+                            }}
                         </div>
                         <hr />
                         <div class="p-2">
@@ -130,7 +144,12 @@
                                 class="bg-[#f68b1e] p-2 rounded-[3px] text-white w-full text-[.8rem] lg:text-[1rem]"
                             >
                                 <!-- <Link :href="`/checkout/${product}`"> -->
-                                checkout( {{ nigeria.format(total) }})
+                                checkout(
+                                {{
+                                    nigeria
+                                        .format(total)
+                                        .replace(/(\.|,)00$/g, "")
+                                }})
                                 <!-- </Link> -->
                             </button>
                         </div>
@@ -150,13 +169,16 @@
 
 <script lang="ts">
 import { TrashIcon, MinusIcon, PlusIcon } from "@heroicons/vue/24/outline";
-import { Link, useForm, router } from "@inertiajs/vue3";
+import { Link, useForm, router, usePage } from "@inertiajs/vue3";
 import { defineComponent, onMounted, ref } from "vue";
 // useForm
 import Modal from "../modals/modal.vue";
 import Btn from "../btn/btn.vue";
 import emptyVue from "./empty.vue";
 import deleteModalVue from "../modalComp/deleteModal.vue";
+import Spinner from "../spinner/spinner.vue";
+import Input from "../btn/input.vue";
+
 // TrashIcon
 
 export default defineComponent({
@@ -169,6 +191,8 @@ export default defineComponent({
         emptyVue,
         Modal,
         deleteModalVue,
+        Spinner,
+        Input,
     },
 
     props: {
@@ -188,20 +212,21 @@ export default defineComponent({
             type: Object,
             required: true,
         },
-        count: {
-            type: Object,
-            required: true,
-        },
-        q: {
-            type: Array,
-            required: true,
-        },
+        // count: {
+        //     type: Array,
+        //     required: true,
+        // },
+        // q: {
+        //     type: Array,
+        //     required: true,
+        // },
     },
     setup(props) {
         onMounted(() => {});
-        console.log("this: ", props.count);
+        const loading = ref(false);
+
         const checkout = useForm({
-            product: props.product,
+            // product: props.product,
             total: props.total,
             cart: props.cart,
         });
@@ -213,31 +238,42 @@ export default defineComponent({
         const removeCartModal = () => {
             showModal.value = true;
         };
-        const getProductQuantity = () => {
-            // const product = props.cart.find(
-            //     (item: any) => item.product_id == id
-            // );
-            // const product = props.cart;
-            // product.find();
-            // return product.quantity;
-        };
-        getProductQuantity();
 
         const removeCart = (id: number) => {
-            checkout.delete(route("cart", id));
+            // console.log("id: ", id);
+            checkout.delete(route("cart.delete", id));
+            showModal.value = false;
         };
-
+        // increaseQuantity;
+        const reduceQuantity = async (id: number) => {
+            loading.value = true;
+            await checkout.put(route("cart.reduce", id), {
+                onFinish: () => {
+                    loading.value = false;
+                },
+            });
+        };
+        const increaseQuantity = async (id: number) => {
+            loading.value = true;
+            await checkout.put(route("cart.increase", id), {
+                onFinish: () => {
+                    loading.value = false;
+                },
+            });
+        };
         const proceedToCheckout = () => {
             checkout.post("/checkout");
         };
 
         return {
             proceedToCheckout,
-            getProductQuantity,
             removeCart,
             removeCartModal,
             showModal,
             cancel,
+            reduceQuantity,
+            loading,
+            increaseQuantity,
         };
     },
 });

@@ -77,7 +77,10 @@
         <div
             class="border bg-white space-y-[2rem] mb-[2rem] p-3 sm:mx-3 md:mx-0 rounded-[4px]"
         >
-            <div class="grid grid-cols-4 gap-4 lg:grid-cols-6 h-full">
+            <div
+                v-if="product.length > 0"
+                class="grid grid-cols-4 gap-4 lg:grid-cols-6 h-full"
+            >
                 <div v-for="products in product" :key="products.id">
                     <!-- {{ products.title }} -->
                     <div class="oso h-full">
@@ -97,12 +100,27 @@
                                         {{ products?.title }}
                                         <!-- {{}} -->
                                         <br />
-                                        ₦ {{ products?.price }}
+                                        {{
+                                            nigeria
+                                                .format(products?.price)
+                                                .replace(/(\.|,)00$/g, "")
+                                        }}
                                     </div>
                                 </div>
                             </Link>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div
+                v-else
+                class="w-fit flex items-center justify-center capitalize"
+            >
+                <div id="" class="text-center">
+                    no products yet😞 <br />
+                    product will be added soon
+                    <br />
+                    Bear with us
                 </div>
             </div>
         </div>
@@ -262,7 +280,11 @@ export default defineComponent({
                 image: clearance,
             },
         ]);
-        return { products };
+        const nigeria = new Intl.NumberFormat("en-NG", {
+            style: "currency",
+            currency: "NGN",
+        });
+        return { products, nigeria };
     },
 });
 </script>

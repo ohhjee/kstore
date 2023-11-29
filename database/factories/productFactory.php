@@ -18,12 +18,15 @@ class productFactory extends Factory
     public function definition(): array
     {
         $title = fake()->randomElement(['samsung s23', 'redmi note 12', 'tecno camon 20', 'dior top']);
+        $cate = fake()->randomElement(['phone', "cloth"]);
 
         return [
             'title' => $title,
             'description' => fake()->text(),
-            'quantity' =>  fake()->numberBetween(1, 100),
+            'stock' =>  fake()->numberBetween(1, 100),
             'price' => fake()->numberBetween(5, 1000),
+            'category' => $cate
+
 
         ];
     }

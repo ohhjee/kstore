@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Cart;
 use Inertia\Inertia;
 use App\Helper\Carts;
 use Inertia\Response;
 use App\Models\Address;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Unicodeveloper\Paystack\Paystack;
 use App\Http\Resources\AddressResource;
 use App\Http\Requests\Auth\AddressRequest;
-use Unicodeveloper\Paystack\Paystack;
 
-
+// TODO: page disappearing after reloading
 class AddressController extends Controller
 {
     public $paystack;
@@ -32,19 +33,20 @@ class AddressController extends Controller
 
         if ($getUserAddress) {
             try {
-                dd('hey-update');
+                // dd('hey-update');
             } catch (\Throwable $th) {
                 throw $th;
             }
         } else {
             Address::create($userAddress);
         }
+        // return Inertia::render('checkout/checkout');
     }
     public function show(Address $address, Request $request)
     {
         // dd("hey");
         list($products, $cartItems) = Carts::getProductAndCartItems();
-
+        $cartCount = Cart::count();
         $userAddress = $request->user()->id;
         $user = $request->user();
         $getUserAddress = $address->get()->whereIn('user_id', $userAddress)->first();
@@ -59,9 +61,11 @@ class AddressController extends Controller
                 'address' => $getUserAddress,
                 'user' => $user,
                 'total' => $total,
-                'reference' => $reference
+                'reference' => $reference,
+                'count' => $cartCount
 
             ]);
         }
+        // dd('kd');
     }
 }

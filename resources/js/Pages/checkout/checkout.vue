@@ -143,7 +143,9 @@
                     <div
                         class="p-2 flex justify-between items-center text-[.8rem]"
                     >
-                        <div class="text-capitalize">Item's total(1)</div>
+                        <div class="text-capitalize">
+                            Item's total({{ count }})
+                        </div>
                         {{ nigeria.format(total) }}
                     </div>
                     <hr />
@@ -248,8 +250,14 @@ export default defineComponent({
         reference: {
             type: String,
         },
+        count: {
+            type: Number,
+            required: true,
+        },
     },
     setup(props) {
+        console.log(props.count);
+
         interface IsCurrency {
             currency: string;
             style: string;

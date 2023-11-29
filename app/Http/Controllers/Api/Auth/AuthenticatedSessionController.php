@@ -25,7 +25,7 @@ class AuthenticatedSessionController extends Controller
     public function index(Request $request)
     {
         $user = $request->session()->get('user');
-        dd($user);
+        // dd($user);
 
 
         // $credentials = $request->validate([

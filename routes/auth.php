@@ -30,11 +30,4 @@ Route::middleware('guest')->group(function () {
     Route::post('/checkMail', [verifyMail::class, 'checkMail'])->name('mailVerification');
     Route::get('/resetPassword', [ResetPasswordController::class, 'index'])->name("resetPassword");
     Route::put('/resetPassword', [ResetPasswordController::class, 'checkMail'])->name("updatePassword");
-
-    // Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
-    // Route::post('logout', function () {
-    //     dd('hey');
-    //     auth()->logout();
-    //     return Inertia::location('/');
-    // });
 });

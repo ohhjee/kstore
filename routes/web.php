@@ -76,8 +76,12 @@ Route::get('/product/{slug}', [ProductController::class, 'index']);
 Route::get('/product', [ProductController::class, 'index']);
 
 Route::resource('cart', cartController::class);
-Route::post('/cart/{product:id}', [cartController::class, 'add'])->name('cart');
-Route::delete('/cart/{product:id}', [cartController::class, 'destroy'])->name('cart.delete');
+Route::post('/cart/{product:id}', [cartController::class, 'add'])->name('cart.addToCart');
+Route::delete('/cart/delete/{product:id}', [cartController::class, 'destroy'])->name('cart.delete');
+Route::put('/cart/reduce/{product:id}', [cartController::class, 'remove'])->name('cart.reduce');
+Route::put('/cart/increase/{product:id}', [cartController::class, 'increase'])->name('cart.increase');
+
+
 
 
 
@@ -88,6 +92,6 @@ Route::middleware('auth')->group(function () {
     Route::get("profile", [UserProfile::class, 'create']);
     Route::put("profile", [UserProfile::class, 'update'])->name('profile.update');
     require __DIR__ . '/address.php';
+    require __DIR__ . '/payment.php';
 });
-require __DIR__ . '/payment.php';
 require __DIR__ . '/auth.php';

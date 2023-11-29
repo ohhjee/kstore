@@ -15,7 +15,7 @@ use PhpParser\Node\Expr\FuncCall;
 
 class cartController extends Controller
 {
-    public function index(Cart $cart, Request $request)
+    public function index(Request $request)
     {
         $user = $request->user();
 
@@ -23,27 +23,26 @@ class cartController extends Controller
         $id = Arr::pluck($cartItem, 'product_id');
         $products = product::get()->whereIn('id', $id);
         $cartItems = Arr::keyBy($cartItem, 'product_id');
-        $cartItemer = Arr::keyBy($cartItem, 'id');
+        $cart = Cart::with('product')->where(['user_id' => $user->id])->get();
+        // $cart = Cart::with('product')->get();
 
-
-        // dump($cartItem);
-        // $cartItem->each(function ($cartItem, $pros) {
-        //     dd($pros, $cartItem);
-        // });
-        // $pro = product::where('id');
-        // dd($pro);
-        // $quantity = array();
-        // foreach ($cartItem as $key => $array) {
-        //     foreach ($array as $key1 => $value) {
-        //         $real = $array[$key1]['quantity'];
-        //         dump($real);
-        //     }
-        // }
-        $quantity = [];
-        foreach ($cartItem as   $key => $value) {
-            $quantity[] =   [$key,  $value['quantity']];
-            // dump($quantity);
+        // dd($cart);
+        $formattedCartItems = [];
+        foreach ($cart as $carts) {
+            $formattedCartItem = [
+                'product_id' => $carts->product_id,
+                'quantity' => $carts->quantity,
+                'user_id' => $carts->user_id
+            ];
+            // Add product information if needed
+            if ($carts->product) {
+                $formattedCartItem['product'] = $carts->product;
+            }
+            $formattedCartItems[] = $formattedCartItem;
         }
+
+
+        // dd($formattedCartItems);
         $total = 0;
         foreach ($products as $product) {
             $total += $product->price * $cartItems[$product->id]['quantity'];
@@ -53,10 +52,10 @@ class cartController extends Controller
             [
                 'user' => $user,
                 'product' => $products,
-                'cart' => $cartItems,
+                'cart' => $formattedCartItems,
                 'total' => $total,
-                'count' => $cartItems,
-                'q' => $quantity
+                // 'count' => $cartItemer,
+                // 'q' => $caters
             ]
         );
     }
@@ -138,6 +137,8 @@ class cartController extends Controller
         $cartItems = Arr::keyBy($cartItems, 'product_id');
         // return [$products, $cartItems];
         $total = 0;
+        $cartCount = Cart::count();
+
         $user = $request->user();
 
         foreach ($products as $product) {
@@ -146,16 +147,47 @@ class cartController extends Controller
         return Inertia::render('checkout/checkout', [
             'total' => $total,
             'user' => $user,
+            'count' => $cartCount
+
 
         ]);
     }
+    public function remove(Request $request, product $product)
+    {
+        // dd("hey");
+        $quantity = $request->post('quantity', 1);
+        $user = $request->user();
+        $cartItem = Cart::where(['user_id' => $user->id, 'product_id' => $product->id])->first();
+        if ($cartItem) {
+            $cartItem->quantity -= $quantity;
+            $cartItem->save();
+            if ($cartItem['product_id'] === $product->id) {
+                $product->stock += 1;
+                $product->update();
+            }
+        }
+    }
+    public function increase(Request $request, product $product)
+    {
+        $quantity = $request->post('quantity', 1);
+        $user = $request->user();
+        $cartItem = Cart::where(['user_id' => $user->id, 'product_id' => $product->id])->first();
 
+        if ($cartItem) {
+            $cartItem->quantity += $quantity;
+            $cartItem->update();
+            if ($cartItem['product_id'] === $product->id) {
+                $product->stock -= 1;
+                $product->update();
+            }
+        }
+    }
 
     public function destroy(Request $request, product $product)
     {
         $user = $request->user();
         if ($user) {
-            $cartItem = Cart::query()->where(['user_id' => $user->id])->first();
+            $cartItem = Cart::query()->where(['user_id' => $user->id, 'product_id' => $product->id])->first();
             if ($cartItem) {
                 $cartItem->delete();
                 return back()->with('success', 'deleted');

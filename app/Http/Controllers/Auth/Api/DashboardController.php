@@ -16,6 +16,8 @@ class DashboardController extends Controller
     public function index(Request $request, product $products, Cart $cart): Response
     {
         $product = $products->limit(12)->get();
+        // if (empty($products)) {
+        // }
         $user = $request->user();
         $cartItems = Carts::getCartItems();
         $id = Arr::pluck($cartItems, 'product_id');

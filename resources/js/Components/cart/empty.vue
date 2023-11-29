@@ -57,7 +57,7 @@ export default defineComponent({
         const backHome = (e) => {
             e.preventDefault();
 
-            window.location.href = "http://192.168.157.90:8000/";
+            window.location.href = "http://127.0.0.1:8000/";
         };
         return { backHome };
     },

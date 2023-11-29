@@ -24,7 +24,7 @@
                     cancel
                 </button>
                 <button
-                    @click="deleteItem"
+                    @click="deleteItem(id)"
                     class="border px-4 py-1 rounded border-red-500 bg-red-500 text-white capitalize"
                 >
                     delete
@@ -40,14 +40,20 @@ import { defineComponent, ref } from "vue";
 
 export default defineComponent({
     components: { XMarkIcon },
-
+    props: {
+        cart: {
+            type: Array,
+        },
+    },
     emits: ["cancel", "removeCart"],
     setup(_, { emit }) {
         const cancel = () => {
             emit("cancel");
         };
         const deleteItem = (id: number) => {
-            emit("removeCart");
+            console.log(id);
+
+            emit("removeCart", id);
         };
         return { cancel, deleteItem };
     },

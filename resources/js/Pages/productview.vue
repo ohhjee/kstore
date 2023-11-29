@@ -31,7 +31,7 @@ export default defineComponent({
         },
     },
     setup(props) {
-        console.log(typeof props.user);
+        console.log(props.products);
 
         return {};
     },

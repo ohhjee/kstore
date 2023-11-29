@@ -6,9 +6,6 @@
             :product="product"
             :total="total"
             :nigeria="nigeria"
-            :count="count"
-            :counter="counter"
-            :q="q"
         />
     </authenticated-layout>
 </template>
@@ -29,6 +26,7 @@ export default defineComponent({
         },
         product: {
             type: Object,
+            required: true,
         },
         total: {
             type: Number,
@@ -37,12 +35,12 @@ export default defineComponent({
         user: {
             type: Object,
         },
-        count: {
-            type: Object,
-        },
-        q: {
-            type: Array,
-        },
+        // count: {
+        //     type: Array,
+        // },
+        // q: {
+        //     type: Array,
+        // },
     },
     setup(props) {
         const counter = ref();

@@ -15,7 +15,7 @@ class Carts
         $request = \request();
         $user = $request->user();
         if ($user) {
-            // return cartItem::where('user_id', $user->id)->sum('quantity');
+            // return Cart::where('user_id', $user->id)->sum('quantity');
             return Cart::whereBelongsTo($user->id)->sum('quantity');
         } else {
             $cartItems = self::getCookiesCartItems();
