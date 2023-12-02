@@ -13,6 +13,8 @@
                     :loading="loading"
                     :showForm="showForm"
                     :show="show"
+                    :date="date"
+                    :msg="msg"
                 />
                 <orders class="mt-[5rem]" />
             </div>
@@ -34,9 +36,16 @@ export default defineComponent({
             type: Object,
             required: true,
         },
+        date: {
+            type: String,
+            required: true,
+        },
         cart: {
             type: Object,
             required: true,
+        },
+        msg: {
+            type: String,
         },
     },
     components: { profile, AuthenticatedLayout, Head, Orders },

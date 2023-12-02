@@ -6,6 +6,7 @@
             :product="product"
             :total="total"
             :nigeria="nigeria"
+            :msg="msg"
         />
     </authenticated-layout>
 </template>
@@ -34,6 +35,9 @@ export default defineComponent({
         },
         user: {
             type: Object,
+        },
+        msg: {
+            type: String,
         },
         // count: {
         //     type: Array,

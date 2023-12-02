@@ -170,15 +170,17 @@
 <script lang="ts">
 import { TrashIcon, MinusIcon, PlusIcon } from "@heroicons/vue/24/outline";
 import { Link, useForm, router, usePage } from "@inertiajs/vue3";
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, onMounted, ref, defineAsyncComponent } from "vue";
 // useForm
 import Modal from "../modals/modal.vue";
 import Btn from "../btn/btn.vue";
 import emptyVue from "./empty.vue";
-import deleteModalVue from "../modalComp/deleteModal.vue";
+// import deleteModalVue from "../modalComp/deleteModal.vue";
 import Spinner from "../spinner/spinner.vue";
 import Input from "../btn/input.vue";
-
+const deleteModalVue = defineAsyncComponent({
+    loader: () => import("../modalComp/deleteModal.vue"),
+});
 // TrashIcon
 
 export default defineComponent({
@@ -212,6 +214,7 @@ export default defineComponent({
             type: Object,
             required: true,
         },
+
         // count: {
         //     type: Array,
         //     required: true,

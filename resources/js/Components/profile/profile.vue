@@ -1,6 +1,32 @@
 <template>
     <div>
-        <div class="mt-[3rem] px-4" v-if="loading">
+        <div id="" class="grid grid-cols-12 my-[5rem] gap-4">
+            <div class="col-span-12 lg:col-span-4">
+                <user-profile :user="user" :msg="msg" :date="date" class="" />
+            </div>
+            <div class="col-span-12 lg:col-span-8">
+                <div
+                    id="user_profile_setting"
+                    class="flex justify-between w-fit space-x-5 mb-[2em]"
+                >
+                    <div id="overview" class="text-[#f68b1e] font-medium">
+                        <button class="capitalize">overview</button>
+                    </div>
+                    <div id="general_settings" class="">
+                        <button class="text-[#f68b1e] font-medium capitalize">
+                            general settings
+                        </button>
+                    </div>
+                    <div id="Advance_setting" class="">
+                        <button class="text-[#f68b1e] font-medium capitalize">
+                            advance settings
+                        </button>
+                    </div>
+                </div>
+                <user-settings class="" />
+            </div>
+        </div>
+        <!-- <div class="mt-[3rem] px-4" v-if="loading">
             <div
                 class="h-[20vh] md:h-[40vh] lg:h-[30vh] w-full mx-auto rounded"
             >
@@ -40,12 +66,12 @@
                             <div
                                 class="w-full md:w-5/12 bg-gray-300 h-[42px] rounded"
                             >
-                                <!-- <input type="text" :value="user?.name" class="w-full" /> -->
+
                             </div>
                             <div
                                 class="w-full md:w-5/12 bg-gray-300 h-[42px] rounded"
                             >
-                                <!-- <input type="text" :value="user?.email" class="w-full" /> -->
+
                             </div>
                         </div>
                         <div
@@ -54,12 +80,12 @@
                             <div
                                 class="w-full md:w-5/12 bg-gray-300 h-[42px] rounded"
                             >
-                                <!-- <input type="text" :value="user?.email" class="w-full" /> -->
+
                             </div>
                             <div
                                 class="w-full md:w-5/12 bg-gray-300 h-[42px] rounded"
                             >
-                                <!-- <input type="text" :value="user?.email" class="w-full" /> -->
+
                             </div>
                         </div>
 
@@ -79,7 +105,7 @@
                     <div
                         class="bg-gray-300 w-[50vw] sm:w-[30vw] lg:w-[20vw] md:w-[40vw] h-full"
                     ></div>
-                    <!-- {{ user }} -->
+
                     <div class="space-y-4 w-full">
                         <div class="h-4 rounded w-full leading-3 lg:w-2/4">
                             {{ user?.first_name }}
@@ -260,14 +286,17 @@
                 </div>
             </div>
             <div></div>
-        </div>
+        </div> -->
     </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import UserProfile from "./userProfile.vue";
+import UserSettings from "./userSettings.vue";
 
 export default defineComponent({
+    components: { UserProfile, UserSettings },
     props: {
         user: {
             type: Object,
@@ -282,8 +311,15 @@ export default defineComponent({
             type: Boolean,
         },
         showForm: { type: Boolean },
-        show: {
-            // type: () => {},
+        cart: {
+            type: Object,
+        },
+        date: {
+            type: String,
+            required: true,
+        },
+        msg: {
+            type: String,
         },
     },
     setup() {
