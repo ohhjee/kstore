@@ -34,20 +34,32 @@
             </div>
         </div>
         <div class="bg-white rounded-[4px] p-3" id="">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi
-            obcaecati quam non officia ipsum, illo, nemo dolorum nobis placeat
-            ad consequuntur delectus molestiae possimus soluta reprehenderit
-            facilis. Ipsa, asperiores nam?
+            <Suspense>
+                <user-transaction
+                    class="overflow-x-scroll sm:overflow-hidden"
+                />
+                <template #fallback>
+                    <spinner />
+                </template>
+            </Suspense>
         </div>
     </div>
 </template>
 
 <script lang="ts">
 import { HeartIcon } from "@heroicons/vue/24/outline";
-import { defineComponent } from "vue";
+import { defineComponent, defineAsyncComponent } from "vue";
+const Spinner = defineAsyncComponent({
+    loader: () => import("../spinner/spinner.vue"),
+});
+const UserTransaction = defineAsyncComponent({
+    loader: () => import("./transaction_table/userTransaction.vue"),
+    loadingComponent: Spinner,
+    delay: 500,
+});
 
 export default defineComponent({
-    components: { HeartIcon },
+    components: { HeartIcon, UserTransaction, Spinner },
     setup() {
         return {};
     },

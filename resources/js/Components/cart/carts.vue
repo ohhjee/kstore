@@ -104,7 +104,7 @@
                             </div>
                         </div>
                         <div>
-                            <Modal>
+                            <Modal v-if="showModal">
                                 <deleteModalVue
                                     @cancel="cancel"
                                     @removeCart="
@@ -171,15 +171,25 @@
 import { TrashIcon, MinusIcon, PlusIcon } from "@heroicons/vue/24/outline";
 import { Link, useForm, router, usePage } from "@inertiajs/vue3";
 import { defineComponent, onMounted, ref, defineAsyncComponent } from "vue";
-// useForm
-import Modal from "../modals/modal.vue";
-import Btn from "../btn/btn.vue";
-import emptyVue from "./empty.vue";
-// import deleteModalVue from "../modalComp/deleteModal.vue";
-import Spinner from "../spinner/spinner.vue";
-import Input from "../btn/input.vue";
+
+const Input = defineAsyncComponent({
+    loader: () => import("../btn/input.vue"),
+});
+const Spinner = defineAsyncComponent({
+    loader: () => import("../spinner/spinner.vue"),
+});
+const Btn = defineAsyncComponent({
+    loader: () => import("../btn/btn.vue"),
+    loadingComponent: Spinner,
+});
+const emptyVue = defineAsyncComponent({
+    loader: () => import("./empty.vue"),
+});
 const deleteModalVue = defineAsyncComponent({
     loader: () => import("../modalComp/deleteModal.vue"),
+});
+const Modal = defineAsyncComponent({
+    loader: () => import("../modals/modal.vue"),
 });
 // TrashIcon
 
@@ -243,7 +253,6 @@ export default defineComponent({
         };
 
         const removeCart = (id: number) => {
-            // console.log("id: ", id);
             checkout.delete(route("cart.delete", id));
             showModal.value = false;
         };

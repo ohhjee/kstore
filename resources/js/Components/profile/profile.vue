@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div id="" class="grid grid-cols-12 my-[5rem] gap-4">
+        <div id="" class="grid grid-cols-12 my-[5rem] gap-4 sm:mx-2 lg:mx-0">
             <div class="col-span-12 lg:col-span-4">
                 <user-profile :user="user" :msg="msg" :date="date" class="" />
             </div>
@@ -291,9 +291,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, defineAsyncComponent } from "vue";
+const UserSettings = defineAsyncComponent({
+    loader: () => import("./userSettings.vue"),
+});
+// const UserProfile = defineAsyncComponent({
+//     loader: () => import("./userProfile.vue"),
+// });
 import UserProfile from "./userProfile.vue";
-import UserSettings from "./userSettings.vue";
 
 export default defineComponent({
     components: { UserProfile, UserSettings },
