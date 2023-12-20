@@ -4,7 +4,7 @@
         <nav class="bg-white shadow-[0px_0px_5px_0px] shadow-slate-300 w-full">
             <div class="container mx-auto">
                 <div
-                    class="border justify-between flex flex-wrap items-center mx-auto md:space-x-2 p-4"
+                    class="justify-between flex flex-wrap items-center mx-auto md:space-x-2 p-4"
                 >
                     <div class="flex">
                         <div class="md:hidden">

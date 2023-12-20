@@ -32,7 +32,7 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        // $userAddress = $request->user()->id;
+        $userAddress = $request->user()->id ?? null;
 
         return array_merge(parent::share($request), [
             'flash' => [
@@ -49,7 +49,8 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'isLoggedIn' => auth()->check(),
                 'user' => $request->user(),
-                // "address" => Address::get()->whereIn('user_id', $userAddress)->first()
+                "address" => Address::where('user_id', $userAddress)->first(),
+                // dd(Address::where('user_id', $userAddress)->first())
 
             ],
             'ziggy' => function () use ($request) {

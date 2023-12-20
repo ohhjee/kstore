@@ -23,8 +23,8 @@ class cartController extends Controller
         $id = Arr::pluck($cartItem, 'product_id');
         $products = product::get()->whereIn('id', $id);
         $cartItems = Arr::keyBy($cartItem, 'product_id');
-        $cart = Cart::with('product')->where(['user_id' => $user->id])->get();
-        // $cart = Cart::with('product')->get();
+        $cart =  Cart::with('product')->where(['user_id' => $user->id])->get();
+
 
         // dd($cart);
         $formattedCartItems = [];
@@ -130,6 +130,7 @@ class cartController extends Controller
 
     public function checkout(Request $request)
     {
+        // dd("hey-update");
 
         $cartItems = Carts::getCartItems();
         $id = Arr::pluck($cartItems, 'product_id');

@@ -11,5 +11,5 @@ use App\Http\Controllers\Api\AddressController;
 Route::get('checkout', [OrderController::class, 'index']);
 // Route::get('address', [AddressController::class, 'show'])->name('checkout.address');
 
-Route::get('checkout', [AddressController::class, 'show']);
 Route::post('checkouts', [AddressController::class, 'index'])->name('checkouts');
+Route::get('checkouts', [AddressController::class, 'show']);

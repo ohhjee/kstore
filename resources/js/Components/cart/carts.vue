@@ -253,13 +253,14 @@ export default defineComponent({
         };
 
         const removeCart = (id: number) => {
-            checkout.delete(route("cart.delete", id));
+            checkout.delete(route("cart.delete", id), { preserveScroll: true });
             showModal.value = false;
         };
         // increaseQuantity;
         const reduceQuantity = async (id: number) => {
             loading.value = true;
             await checkout.put(route("cart.reduce", id), {
+                preserveScroll: true,
                 onFinish: () => {
                     loading.value = false;
                 },
@@ -268,6 +269,7 @@ export default defineComponent({
         const increaseQuantity = async (id: number) => {
             loading.value = true;
             await checkout.put(route("cart.increase", id), {
+                preserveScroll: true,
                 onFinish: () => {
                     loading.value = false;
                 },

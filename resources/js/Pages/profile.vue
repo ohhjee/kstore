@@ -16,7 +16,7 @@
                     :date="date"
                     :msg="msg"
                 />
-                <orders class="mt-[5rem]" />
+                <!-- <orders class="mt-[5rem]" /> -->
             </div>
         </authenticated-layout>
     </div>

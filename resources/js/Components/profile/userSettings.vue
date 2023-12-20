@@ -33,7 +33,7 @@
                 <!-- </div> -->
             </div>
         </div>
-        <div class="bg-white rounded-[4px] p-3" id="">
+        <div class="bg-white rounded-[4px] p-3 h-fit" id="">
             <Suspense>
                 <user-transaction
                     class="overflow-x-scroll sm:overflow-hidden"

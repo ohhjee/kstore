@@ -204,8 +204,8 @@ import {
     TicketIcon,
     ChevronUpDownIcon,
 } from "@heroicons/vue/24/outline";
-import { Head, useForm } from "@inertiajs/vue3";
-import { defineComponent, onMounted, ref } from "vue";
+import { Head, useForm, usePage } from "@inertiajs/vue3";
+import { computed, defineComponent, onMounted, ref } from "vue";
 import {
     Listbox,
     ListboxLabel,
@@ -240,13 +240,14 @@ export default defineComponent({
         },
         user: {
             type: Object,
+            required: true,
         },
         errors: {
             type: Object,
         },
-        address: {
-            type: Object,
-        },
+        // address: {
+        //     type: Object,
+        // },
         reference: {
             type: String,
         },
@@ -256,7 +257,11 @@ export default defineComponent({
         },
     },
     setup(props) {
-        console.log(props.count);
+        const page = usePage();
+        const address: any = page.props.auth?.address;
+        // computed(() => {
+        // });
+        // console.log(address);
 
         interface IsCurrency {
             currency: string;
@@ -320,6 +325,9 @@ export default defineComponent({
         const tet = () => {
             checkouts.post(route("pay"));
         };
+        //  const tet = () => {
+        //     checkouts.get(route("pay"));
+        // };
 
         return {
             selectedPerson,
@@ -328,6 +336,7 @@ export default defineComponent({
             radioCheck,
             tet,
             PaymentMethod,
+            address,
         };
         // return { nigeria };
     },

@@ -75,7 +75,7 @@
                     </div>
                 </div>
             </div>
-            <div><Link href="" class="text-[.9rem]">Details</Link></div>
+            <div><Link href="heye" class="text-[.9rem]">Details</Link></div>
         </div>
         <hr />
         <div class="flex items-start justify-between p-3">

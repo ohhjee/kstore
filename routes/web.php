@@ -12,12 +12,13 @@ use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Api\Auth\ProductController;
 use App\Http\Controllers\Api\cartController;
-use App\Http\Controllers\Api\navController;
-use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Auth\Api\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\Api\DashboardController as ApiDashboardController;
-use App\Models\Category;
-use Symfony\Contracts\Service\Attribute\Required;
+use App\Http\Controllers\Auth\Api\OrderedController;
+// use App\Http\Controllers\Auth\Api\DashboardController as ApiDashboardController;
+// use App\Models\Category;
+// use App\Http\Controllers\Api\navController;
+// use App\Http\Controllers\Api\OrderController;
+// use Symfony\Contracts\Service\Attribute\Required;
 
 /*
 |--------------------------------------------------------------------------
@@ -91,6 +92,7 @@ Route::middleware('auth')->group(function () {
         ->name('logout');
     Route::get("profile", [UserProfile::class, 'create']);
     Route::put("profile", [UserProfile::class, 'update'])->name('profile.update');
+    Route::get('order', [OrderedController::class, 'index']);
     require __DIR__ . '/address.php';
     require __DIR__ . '/payment.php';
 });

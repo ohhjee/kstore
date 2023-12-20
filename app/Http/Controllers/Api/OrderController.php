@@ -25,6 +25,8 @@ class OrderController extends Controller
     }
     public function index(Request $request): Response
     {
+        // dd("hey-update");
+
         $userAddress = $request->user()->id;
         $user = $request->user();
         $cartItems = Carts::getCartItems();

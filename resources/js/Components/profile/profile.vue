@@ -1,6 +1,9 @@
 <template>
     <div>
-        <div id="" class="grid grid-cols-12 my-[5rem] gap-4 sm:mx-2 lg:mx-0">
+        <div
+            id=""
+            class="grid grid-cols-12 my-[5rem] gap-4 sm:mx-2 lg:mx-0 h-fit"
+        >
             <div class="col-span-12 lg:col-span-4">
                 <user-profile :user="user" :msg="msg" :date="date" class="" />
             </div>

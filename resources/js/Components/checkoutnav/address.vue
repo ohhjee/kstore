@@ -1,7 +1,9 @@
 <template>
     <div>
         <form @submit.prevent="submitForm">
-            <div class="text-[.8rem] capitalize">add new address</div>
+            <div class="text-[.8rem] capitalize" v-if="address">
+                add new address
+            </div>
             <div>
                 <div class="grid grid-cols-2 gap-4">
                     <div class="relative z-0 w-full group mt-4">
@@ -128,15 +130,16 @@
                         >
                             delivery address
                         </label>
-                        <input
-                            placeholder="enter your address"
-                            type="text"
-                            name="address_1"
-                            id="address_1"
-                            v-if="address"
-                            :value="address?.address_1"
-                            class="h-[40px] text-[.7rem] text-black/70 border placeholder:uppercase placeholder:text-[.7rem] bg-transparent text-sm rounded focus:ring-0 focus:outline-none focus:border-gray-400 border-gray-400 block w-full p-2.5"
-                        />
+                        <div v-if="address">
+                            <input
+                                placeholder="enter your address"
+                                type="text"
+                                name="address_1"
+                                id="address_1"
+                                :value="address?.address_1"
+                                class="h-[40px] text-[.7rem] text-black/70 border placeholder:uppercase placeholder:text-[.7rem] bg-transparent text-sm rounded focus:ring-0 focus:outline-none focus:border-gray-400 border-gray-400 block w-full p-2.5"
+                            />
+                        </div>
                         <div v-else>
                             <input
                                 placeholder="enter your address"
@@ -383,7 +386,7 @@ import {
     ListboxOptions,
     ListboxOption,
 } from "@headlessui/vue";
-import { useForm } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import spinner from "../spinner/spinner.vue";
 export default defineComponent({
     components: {
@@ -421,7 +424,7 @@ export default defineComponent({
         // console.log($page.);
 
         onMounted(() => {
-            props.address;
+            // console.log(props.address);
         });
         const addressForm = useForm({
             address_1: "",
@@ -431,7 +434,7 @@ export default defineComponent({
             region: "",
             city: "",
         });
-
+        const address = usePage.pro;
         const submitForm = async () => {
             loading.value = true;
             await addressForm.post(route("checkouts"), {

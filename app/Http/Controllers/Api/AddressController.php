@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use Unicodeveloper\Paystack\Paystack;
 use App\Http\Resources\AddressResource;
 use App\Http\Requests\Auth\AddressRequest;
+use App\Models\User;
 
 // TODO: page disappearing after reloading
 class AddressController extends Controller
@@ -24,12 +25,13 @@ class AddressController extends Controller
     }
     public function index(AddressRequest $address)
     {
+        // dd("hey-update");
+
         $request = \request();
         $user = $request->user()->id;
         $userAddress =  $address->validated();
         $getUserAddress = Address::where('user_id', $user)->exists();
         // $getUserAddress = Address::where('user_id', $userAddress['user_id'])->exists();
-
 
         if ($getUserAddress) {
             try {
@@ -44,28 +46,40 @@ class AddressController extends Controller
     }
     public function show(Address $address, Request $request)
     {
-        // dd("hey");
+
+        // $userAddress = $request->user()->id;
+        $user = User::get();
         list($products, $cartItems) = Carts::getProductAndCartItems();
         $cartCount = Cart::count();
-        $userAddress = $request->user()->id;
         $user = $request->user();
-        $getUserAddress = $address->get()->whereIn('user_id', $userAddress)->first();
+        $get_user_address = $address->where('user_id', $user->id)->first();
+        // $getUserAddress = $address->get();
         $total = 0;
         $reference = $this->paystack->genTranxRef();
 
         foreach ($products as $product) {
             $total += $product->price * $cartItems[$product->id]['quantity'];
         }
-        if ($getUserAddress) {
-            return Inertia::render('checkout/checkout', [
-                'address' => $getUserAddress,
-                'user' => $user,
-                'total' => $total,
-                'reference' => $reference,
-                'count' => $cartCount
 
-            ]);
-        }
-        // dd('kd');
+        // $userAddress =  $address->validated();
+        // $getUserAddress = Address::where('user_id', $user)->exists();
+        // if ($getUserAddress) {
+        //     try {
+        //         // dd('hey-update');
+        //     } catch (\Throwable $th) {
+        //         throw $th;
+        //     }
+        // } else {
+        //     $userAddress->update();
+        // }
+
+        return Inertia::render('checkout/checkout', [
+            // 'address' => $get_user_addresss,
+            'user' => $user,
+            'total' => $total,
+            'reference' => $reference,
+            'count' => $cartCount
+
+        ]);
     }
 }
