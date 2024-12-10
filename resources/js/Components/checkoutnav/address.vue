@@ -6,7 +6,7 @@
             </div>
             <div>
                 <div class="grid grid-cols-2 gap-4">
-                    <div class="relative z-0 w-full group mt-4">
+                    <div class="relative z-0 w-full mt-4 group">
                         <label
                             for="first_name"
                             class="font-bold capitalize flex items-center absolute px-1 text-[.7rem] transition-all duration-[300ms] bg-white 0 h-fit -top-[.5rem] left-3 w-auto text-gray-400"
@@ -22,7 +22,7 @@
                             class="h-[40px] text-[.7rem] text-black/70 border bg-transparent text-sm rounded focus:ring-0 focus:outline-none focus:border-gray-400 border-gray-400 block w-full p-2.5"
                         />
                     </div>
-                    <div class="relative z-0 w-full group mt-4">
+                    <div class="relative z-0 w-full mt-4 group">
                         <label
                             for="first_name"
                             class="font-bold capitalize flex items-center absolute px-1 text-[.7rem] transition-all duration-[300ms] bg-white 0 h-fit -top-[.5rem] left-3 w-auto text-gray-400"
@@ -39,7 +39,7 @@
                         />
                     </div>
 
-                    <div class="relative z-0 w-full group mt-4">
+                    <div class="relative z-0 w-full mt-4 group">
                         <div class="grid md:grid-cols-5 lg:grid-cols-7">
                             <div>
                                 <label
@@ -75,9 +75,9 @@
                         </div>
                     </div>
 
-                    <div class="relative z-0 w-full group mt-4">
+                    <div class="relative z-0 w-full mt-4 group">
                         <div
-                            class="grid md:grid-cols-5 lg:grid-cols-7 items-center"
+                            class="grid items-center md:grid-cols-5 lg:grid-cols-7"
                         >
                             <div class="">
                                 <label
@@ -123,7 +123,7 @@
                         </div>
                     </div>
 
-                    <div class="col-span-2 relative">
+                    <div class="relative col-span-2">
                         <label
                             for="address_1"
                             class="font-bold capitalize flex items-center absolute px-1 text-[.7rem] transition-all duration-[300ms] bg-white 0 h-fit -top-[.5rem] left-3 w-auto text-gray-400"
@@ -164,7 +164,7 @@
                         </div>
                     </div>
 
-                    <div class="col-span-2 relative">
+                    <div class="relative col-span-2">
                         <label
                             for="address_2"
                             class="font-bold capitalize flex items-center absolute px-1 text-[.7rem] transition-all duration-[300ms] bg-white 0 h-fit -top-[.5rem] left-3 w-auto text-gray-400"
@@ -192,7 +192,7 @@
                         </div>
                     </div>
 
-                    <div class="relative z-0 w-full group mt-4">
+                    <div class="relative z-0 w-full mt-4 group">
                         <label
                             for="first_name"
                             class="font-bold capitalize flex items-center absolute px-1 text-[.7rem] transition-all duration-[300ms] bg-white 0 h-fit -top-[.5rem] left-3 w-auto text-gray-400"
@@ -234,7 +234,7 @@
                             </small>
                         </div>
                     </div>
-                    <div class="relative z-0 w-full group mt-4">
+                    <div class="relative z-0 w-full mt-4 group">
                         <label
                             for="first_name"
                             class="font-bold z-10 capitalize flex items-center absolute px-1 text-[.7rem] transition-all duration-[300ms] bg-white 0 h-fit -top-[.5rem] left-3 w-auto text-gray-400"
@@ -278,10 +278,10 @@
                                             selectedPerson.name
                                         }}</span>
                                         <span
-                                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2"
+                                            class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none"
                                         >
                                             <ChevronUpDownIcon
-                                                class="h-5 w-5 text-gray-400"
+                                                class="w-5 h-5 text-gray-400"
                                                 aria-hidden="true"
                                             />
                                         </span>
@@ -293,7 +293,7 @@
                                         leave-to-class="opacity-0"
                                     >
                                         <ListboxOptions
-                                            class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                                            class="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                                         >
                                             <ListboxOption
                                                 v-slot="{ active, selected }"
@@ -324,7 +324,7 @@
                                                         class="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600"
                                                     >
                                                         <CheckIcon
-                                                            class="h-5 w-5"
+                                                            class="w-5 h-5"
                                                             aria-hidden="true"
                                                         />
                                                     </span>
@@ -340,7 +340,7 @@
             </div>
             <hr class="my-4" />
             <div class="">
-                <div class="flex items-start space-x-4 justify-end">
+                <div class="flex items-start justify-end space-x-4">
                     <div>
                         <button class="text-[#f68b1e] px-3 py-2">cancel</button>
                     </div>
@@ -434,7 +434,7 @@ export default defineComponent({
             region: "",
             city: "",
         });
-        const address = usePage.pro;
+        // const address = usePage.pro;
         const submitForm = async () => {
             loading.value = true;
             await addressForm.post(route("checkouts"), {

@@ -2,13 +2,13 @@
     <Head title="checkout"></Head>
     <Nav />
     <div class="container mx-auto my-[3rem]">
-        <div class="rounded grid md:grid-cols-4 gap-4 relative">
-            <div class="col-span-4 lg:col-span-3 gap-y-4 grid">
-                <div class="gap-4 col-span-4 bg-white">
+        <div class="relative grid gap-4 rounded md:grid-cols-4">
+            <div class="grid col-span-4 lg:col-span-3 gap-y-4">
+                <div class="col-span-4 gap-4 bg-white">
                     <div class="flex items-center justify-between p-2">
                         <div class="flex items-center">
                             <div
-                                class="border flex items-center justify-center h-4 w-4 rounded-full bg-gray-300"
+                                class="flex items-center justify-center w-4 h-4 bg-gray-300 border rounded-full"
                                 :class="address ? ['bg-green-500'] : []"
                             >
                                 <CheckIcon class="w-3 h-3 text-white" />
@@ -31,13 +31,13 @@
                         />
                     </div>
                 </div>
-                <div class="gap-4 col-span-4 bg-white p-4"></div>
-                <div class="gap-4 col-span-4 bg-white p-4">
-                    <div class="gap-4 col-span-3 bg-white">
+                <div class="col-span-4 gap-4 p-4 bg-white"></div>
+                <div class="col-span-4 gap-4 p-4 bg-white">
+                    <div class="col-span-3 gap-4 bg-white">
                         <div class="flex items-center justify-between p-2">
                             <div class="flex items-center">
                                 <div
-                                    class="border flex items-center justify-center h-4 w-4 rounded-full bg-gray-300"
+                                    class="flex items-center justify-center w-4 h-4 bg-gray-300 border rounded-full"
                                     :class="radioCheck ? ['bg-green-500'] : []"
                                 >
                                     <CheckIcon class="w-2 h-2 text-white" />
@@ -59,7 +59,7 @@
                                 <div>
                                     <div>Payment on delivery</div>
                                     <div
-                                        class="flex mt-3 items-center space-x-2 leading-3"
+                                        class="flex items-center mt-3 space-x-2 leading-3"
                                     >
                                         <div>
                                             <input
@@ -84,7 +84,7 @@
                                 <div>
                                     <div>Cards</div>
                                     <div
-                                        class="flex mt-3 items-center space-x-2 leading-3"
+                                        class="flex items-center mt-3 space-x-2 leading-3"
                                     >
                                         <div>
                                             <input
@@ -108,7 +108,7 @@
                                 <hr class="my-4" />
                                 <div class="">
                                     <div
-                                        class="flex items-start space-x-4 justify-end"
+                                        class="flex items-start justify-end space-x-4"
                                     >
                                         <div>
                                             <button

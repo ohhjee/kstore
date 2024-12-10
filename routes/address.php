@@ -12,4 +12,6 @@ Route::get('checkout', [OrderController::class, 'index']);
 // Route::get('address', [AddressController::class, 'show'])->name('checkout.address');
 
 Route::post('checkouts', [AddressController::class, 'index'])->name('checkouts');
+
+// Route::post('payment', [AddressController::class, 'methods'])->name('payment');
 Route::get('checkouts', [AddressController::class, 'show']);

@@ -2,7 +2,10 @@
     <Head title="order"></Head>
 
     <authenticated-layout :user="user" :cart="cart">
-        <orderpage v-for="n in 4" :key="n" />
+        {{ date }}
+        <div v-if="payment.length === 0">no order</div>
+        <orderpage v-else :payments="payment" :data="date" />
+        <!-- {{ payment }} -->
     </authenticated-layout>
 </template>
 
@@ -18,6 +21,14 @@ export default defineComponent({
         user: { type: Object },
         cart: {
             type: Object,
+            required: true,
+        },
+        payment: {
+            type: Object,
+            required: true,
+        },
+        date: {
+            type: Date,
             required: true,
         },
     },

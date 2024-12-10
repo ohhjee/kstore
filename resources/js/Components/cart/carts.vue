@@ -1,23 +1,23 @@
 <template>
     <div class="mt-4">
         <div class="mb-4" v-if="cart.length >= 1">
-            <div class="rounded grid md:grid-cols-4 gap-4 relative">
-                <div class="col-span-3 gap-y-4 grid">
+            <div class="relative grid gap-4 rounded md:grid-cols-4">
+                <div class="grid col-span-3 gap-y-4">
                     <div
-                        class="gap-4 bg-white p-4"
+                        class="gap-4 p-4 bg-white"
                         v-for="products in cart"
                         :key="products.id"
                     >
-                        <div class="grid grid-cols-2 md:grid-cols-9 gap-4">
+                        <div class="grid grid-cols-2 gap-4 md:grid-cols-9">
                             <div class="h-[15vh] md:order-1">
                                 <img
                                     :src="products?.product.image"
-                                    class="h-full w-full col-span-2 object-left object-cover"
+                                    class="object-cover object-left w-full h-full col-span-2"
                                     alt=""
                                 />
                             </div>
                             <div
-                                class="order-3 md:order-2 col-span-1 md:col-span-6 h-fit"
+                                class="order-3 col-span-1 md:order-2 md:col-span-6 h-fit"
                             >
                                 <div>
                                     {{ products?.product.description }}
@@ -34,17 +34,17 @@
                             </div>
                         </div>
                         <!-- DELETE ITEM FRO CART -->
-                        <div class="mt-4 grid grid-cols-2 gap-3">
+                        <div class="grid grid-cols-2 gap-3 mt-4">
                             <div
                                 class="text-[#f68b1e] text-[.8rem] flex items-start w-fit"
-                                @click="removeCartModal"
+                                @click="removeCartModal(products.product_id)"
                             >
                                 <TrashIcon class="w-5 h-5" />
                                 <span class="uppercase cursor-pointer"
                                     >remove</span
                                 >
                             </div>
-                            <div class="text-end flex items-center justify-end">
+                            <div class="flex items-center justify-end text-end">
                                 <form
                                     class=""
                                     @click.prevent="
@@ -58,7 +58,9 @@
                                             btn="out-of-stock"
                                             type="button"
                                         >
-                                            <spinner />
+                                            <spinner
+                                                v-if="products.product_id"
+                                            />
                                         </Input>
                                     </div>
                                     <div
@@ -72,7 +74,7 @@
                                             class="text-[.8em] bg-[gray] cursor-not-allowed h-6 w-6 rounded-[3px] text-white"
                                         >
                                             <MinusIcon
-                                                class="w-3 flex items-center justify-center h-3 mx-auto"
+                                                class="flex items-center justify-center w-3 h-3 mx-auto"
                                             />
                                         </button>
                                     </div>
@@ -81,7 +83,7 @@
                                         class="text-[.8em] bg-[#f68b1e] h-6 w-6 rounded-[3px] text-white"
                                     >
                                         <MinusIcon
-                                            class="w-3 flex items-center justify-center h-3 mx-auto"
+                                            class="flex items-center justify-center w-3 h-3 mx-auto"
                                         />
                                     </button>
                                 </form>
@@ -97,20 +99,18 @@
                                         class="text-[.8em] bg-[#f68b1e] h-6 w-6 rounded-[3px] text-white"
                                     >
                                         <PlusIcon
-                                            class="w-3 flex items-center justify-center h-3 mx-auto"
+                                            class="flex items-center justify-center w-3 h-3 mx-auto"
                                         />
                                     </button>
                                 </form>
                             </div>
                         </div>
                         <div>
-                            <Modal v-if="showModal">
+                            <!-- <Modal v-if="showModal">
                                 <deleteModalVue
                                     @cancel="cancel"
-                                    @removeCart="
-                                        removeCart(products.product_id)
-                                    "
-                                    :cart="cart"
+                                    @removeCart="removeCart(products)"
+                                    :products="products"
                                     :class="[
                                         showModal
                                             ? 'transition-all duration-[500ms] ease-in-out z-20'
@@ -118,7 +118,7 @@
                                         'transition-all duration-[500ms] ease-in-out',
                                     ]"
                                 />
-                            </Modal>
+                            </Modal> -->
                         </div>
                     </div>
                 </div>
@@ -159,7 +159,7 @@
         </div>
         <div v-else>
             <div
-                class="bg-white rounded-sm shadow-sm py-7 md:py-10 w-full flex items-center justify-center"
+                class="flex items-center justify-center w-full bg-white rounded-sm shadow-sm py-7 md:py-10"
             >
                 <emptyVue />
             </div>
@@ -248,11 +248,16 @@ export default defineComponent({
             showModal.value = false;
         };
 
-        const removeCartModal = () => {
+        const removeCartModal = (id) => {
+            console.log("product: ", id);
+
             showModal.value = true;
         };
 
         const removeCart = (id: number) => {
+            console.log("id:", id);
+            return;
+
             checkout.delete(route("cart.delete", id), { preserveScroll: true });
             showModal.value = false;
         };

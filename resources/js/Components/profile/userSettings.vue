@@ -6,9 +6,12 @@
                     Reward Points
                 </div>
                 <div id="" class="flex space-x-2">
-                    <HeartIcon class="h-6 w-6 text-red-500 overflow-hidden" />
+                    <HeartIcon class="w-6 h-6 overflow-hidden text-red-500" />
                     <div>
-                        4,571
+                        <span v-if="reward?.total">
+                            {{ reward?.total / 1000 }}
+                        </span>
+                        <span v-else> 0 </span>
                         <span class="text-[.8rem] text-gray-500"
                             >Points earn</span
                         >
@@ -36,7 +39,8 @@
         <div class="bg-white rounded-[4px] p-3 h-fit" id="">
             <Suspense>
                 <user-transaction
-                    class="overflow-x-scroll sm:overflow-hidden"
+                    :reward="reward"
+                    class="overflow-x-scroll md:overflow-x-hidden"
                 />
                 <template #fallback>
                     <spinner />
@@ -60,6 +64,11 @@ const UserTransaction = defineAsyncComponent({
 
 export default defineComponent({
     components: { HeartIcon, UserTransaction, Spinner },
+    props: {
+        reward: {
+            type: Object,
+        },
+    },
     setup() {
         return {};
     },

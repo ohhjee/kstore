@@ -79,11 +79,11 @@
         >
             <div
                 v-if="product.length > 0"
-                class="grid grid-cols-4 gap-4 lg:grid-cols-6 h-full"
+                class="grid h-full grid-cols-4 gap-4 lg:grid-cols-6"
             >
                 <div v-for="products in product" :key="products.id">
                     <!-- {{ products.title }} -->
-                    <div class="oso h-full">
+                    <div class="h-full oso">
                         <div class="card">
                             <Link :href="`/product/${products?.slug}`" class="">
                                 <div class="card-body">
@@ -114,7 +114,7 @@
             </div>
             <div
                 v-else
-                class="w-fit flex items-center justify-center capitalize"
+                class="flex items-center justify-center capitalize w-fit"
             >
                 <div id="" class="text-center">
                     no products yet😞 <br />
@@ -159,51 +159,51 @@ export default defineComponent({
 
         const phonetable = new URL(
             "../../../assets/images/cat/phones-tablets_300x240.png",
-            import.meta.url
+            import.meta.url,
         ).href;
         const groceries = new URL(
             "../../../assets/images/cat/groceries_300x240v2.png",
-            import.meta.url
+            import.meta.url,
         ).href;
         const generic = new URL(
             "../../../assets/images/cat/generic_300x240.jpg",
-            import.meta.url
+            import.meta.url,
         ).href;
         const health_beauty = new URL(
             "../../../assets/images/cat/generic_300x240(1).jpg",
-            import.meta.url
+            import.meta.url,
         ).href;
         const television = new URL(
             "../../../assets/images/cat/televisions_300x240.png",
-            import.meta.url
+            import.meta.url,
         ).href;
         const fashion = new URL(
             "../../../assets/images/cat/fash_300x240.jpg",
-            import.meta.url
+            import.meta.url,
         ).href;
         const refrigerators = new URL(
             "../../../assets/images/cat/refrigerators_300x240.png",
-            import.meta.url
+            import.meta.url,
         ).href;
         const earphones = new URL(
             "../../../assets/images/cat/earphones_300x240.png",
-            import.meta.url
+            import.meta.url,
         ).href;
         const generators = new URL(
             "../../../assets/images/cat/generator.gif",
-            import.meta.url
+            import.meta.url,
         ).href;
         const mensSneaker = new URL(
             "../../../assets/images/cat/fashion_300x240.png",
-            import.meta.url
+            import.meta.url,
         ).href;
         const watches = new URL(
             "../../../assets/images/cat/watches_300x240.png",
-            import.meta.url
+            import.meta.url,
         ).href;
         const clearance = new URL(
             "../../../assets/images/cat/Clearance.gif",
-            import.meta.url
+            import.meta.url,
         ).href;
 
         const products = ref<jumia[]>([

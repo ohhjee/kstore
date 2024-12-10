@@ -12,11 +12,11 @@
                 </div>
             </div>
             <div class="my-[2rem]">
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ">
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
                     @foreach ($products as $products)
                         <div class="text-center">
-                            <div class=" w- w-full rounded">
-                                <img src="http://localhost:8000/{{ $products->image }}" claas="h-full object-fit w-full"
+                            <div class="w-full rounded h-[30vh]">
+                                <img src="http://kstore.test/{{ $products->image }}" claas="h-full object-fit w-full"
                                     alt="">
                             </div>
                             <a href="{{ route('admin.product.edit', $products->slug) }}">
@@ -28,30 +28,30 @@
 
                 {{-- <form action="" class="bg-[#272e48] shadow p-4 grid grid-cols-3 rounded gap-4">
                     <div class="grid">
-                        <label class="text-white mb-3" for="product_title">Product title</label>
+                        <label class="mb-3 text-white" for="product_title">Product title</label>
                         <div>
-                            <input type="text" class="w-full bg-transparent placeholder:text-white text-white "
+                            <input type="text" class="w-full text-white bg-transparent placeholder:text-white "
                                 id="product_title" placeholder="product title">
                         </div>
                     </div>
                     <div class="grid">
-                        <label class="text-white mb-3" for="slug_title">Product title</label>
+                        <label class="mb-3 text-white" for="slug_title">Product title</label>
                         <div>
-                            <input type="text" class="w-full bg-transparent placeholder:text-white text-white "
+                            <input type="text" class="w-full text-white bg-transparent placeholder:text-white "
                                 id="slug_title" placeholder="slug">
                         </div>
                     </div>
                     <div class="grid">
-                        <label class="text-white mb-3" for="product_title">Product title</label>
+                        <label class="mb-3 text-white" for="product_title">Product title</label>
                         <div>
-                            <input type="number" class="w-full bg-transparent placeholder:text-white text-white "
+                            <input type="number" class="w-full text-white bg-transparent placeholder:text-white "
                                 id="product_title" placeholder="price">
                         </div>
                     </div>
                     <div class="grid">
-                        <label class="text-white mb-3" for="product_title">Product title</label>
+                        <label class="mb-3 text-white" for="product_title">Product title</label>
                         <div>
-                            <textarea type="text" class="w-full resize-none bg-transparent placeholder:text-white text-white " id="product_title"
+                            <textarea type="text" class="w-full text-white bg-transparent resize-none placeholder:text-white " id="product_title"
                                 placeholder="product title">
                             </textarea>
                         </div>

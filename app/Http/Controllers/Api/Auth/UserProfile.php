@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
+use App\Models\Cart;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Helper\Carts;
 use Inertia\Response;
+use App\Models\Payment;
 use App\Models\product;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
-use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
 
 class UserProfile extends Controller
@@ -25,7 +27,11 @@ class UserProfile extends Controller
         $products = product::get()->whereIn('id', $id);
         $cartItems = Arr::keyBy($cartItems, 'product_id');
         $cart = Cart::where(['user_id' => $user->id])->orderBy('created_at', 'desc')->first();
+        $payment = Payment::where('user_id', $user->id)->first();
+        $reward = $payment;
+        $uuid = rand(0, 9999);
 
+        // dd($uuid);
 
         $message = '';
         $date = '';
@@ -55,7 +61,9 @@ class UserProfile extends Controller
             'user' => $user,
             'cart' => $cartItems,
             'date' => $date,
-            'msg' => $message
+            'msg' => $message,
+            'reward' => $reward
+
 
         ]);
     }

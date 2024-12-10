@@ -1,15 +1,15 @@
 <template>
-    <tr class="border-b border-gray-300 w-full inline-table">
-        <td class="py-4 text-xs">#1234</td>
-        <td class="w-[20%]">
+    <tr class="w-full border-b border-gray-300 inline-table">
+        <td class="py-4 text-xs">{{ rewards?.order_id }}</td>
+        <td class="w-[20%] mx-auto text-center">
             <span
-                class="bg-green-300 uppercase tracking-wider rounded-lg p-1.5 bg-opacity-50 text-xs text-white"
+                class="bg-green-500 uppercase text-center tracking-wider rounded-lg p-1.5 text-xs text-white"
             >
-                paid
+                {{ rewards?.status }}
             </span>
         </td>
-        <td class="text-xs">$400</td>
-        <td class="text-xs">40</td>
+        <td class="text-xs text-center">{{ rewards?.total }}</td>
+        <td class="text-xs text-center">{{ rewards?.total / 1000 }}</td>
         <td class="text-xs w-[20%]">02 Dec 2023 05:33:12</td>
     </tr>
 </template>
@@ -18,6 +18,11 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
+    props: {
+        rewards: {
+            type: Object,
+        },
+    },
     setup() {
         return {};
     },

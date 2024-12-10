@@ -4,11 +4,11 @@
         <nav class="bg-white shadow-[0px_0px_5px_0px] shadow-slate-300 w-full">
             <div class="container mx-auto">
                 <div
-                    class="justify-between flex flex-wrap items-center mx-auto md:space-x-2 p-4"
+                    class="flex flex-wrap items-center justify-between p-4 mx-auto md:space-x-2"
                 >
                     <div class="flex">
                         <div class="md:hidden">
-                            <Bars3Icon class="h-5 w-5 mr-1" />
+                            <Bars3Icon class="w-5 h-5 mr-1" />
                         </div>
                         <Link href="/" class="flex items-center w-full">
                             <img
@@ -20,10 +20,10 @@
                     </div>
 
                     <div
-                        class="items-center justify-end flex md:order-1 md:w-9/12"
+                        class="flex items-center justify-end md:order-1 md:w-9/12"
                         id="navbar-cta"
                     >
-                        <div class="w-8/12 hidden md:block">
+                        <div class="hidden w-8/12 md:block">
                             <form
                                 class="flex items-center justify-center w-full"
                             >
@@ -50,7 +50,7 @@
                         </div>
 
                         <div
-                            class="z-99999 relative flex items-center justify-center text-right"
+                            class="relative flex items-center justify-center text-right z-99999"
                         >
                             <Menu
                                 as="div"
@@ -65,7 +65,7 @@
                                             v-if="!$page.props.auth.isLoggedIn"
                                         >
                                             <UserIcon
-                                                class="ml-2 mr-2 h-5 w-5 text-black hover:text-violet-100"
+                                                class="w-5 h-5 ml-2 mr-2 text-black hover:text-violet-100"
                                                 aria-hidden="true"
                                             />
                                             <span class="hidden md:block">
@@ -127,11 +127,11 @@
                                             <MenuItem>
                                                 <Link
                                                     href="/profile"
-                                                    class="flex w-full items-center capitalize rounded-md text-black px-2 py-2 text-sm"
+                                                    class="flex items-center w-full px-2 py-2 text-sm text-black capitalize rounded-md"
                                                 >
                                                     <div class="w-6 h-6 mr-2">
                                                         <UserIcon
-                                                            class="ml-2 mr-2 h-5 w-5 text-black hover:text-violet-100"
+                                                            class="w-5 h-5 ml-2 mr-2 text-black hover:text-violet-100"
                                                             aria-hidden="true"
                                                         />
                                                     </div>
@@ -142,11 +142,11 @@
                                             <MenuItem>
                                                 <Link
                                                     href="/order"
-                                                    class="flex w-full items-center capitalize rounded-md text-black px-2 py-2 text-sm"
+                                                    class="flex items-center w-full px-2 py-2 text-sm text-black capitalize rounded-md"
                                                 >
                                                     <div class="w-6 h-6 mr-2">
                                                         <UserIcon
-                                                            class="ml-2 mr-2 h-5 w-5 text-black hover:text-violet-100"
+                                                            class="w-5 h-5 ml-2 mr-2 text-black hover:text-violet-100"
                                                             aria-hidden="true"
                                                         />
                                                     </div>
@@ -156,11 +156,11 @@
                                             <MenuItem>
                                                 <Link
                                                     href="/profile"
-                                                    class="flex w-full items-center capitalize rounded-md text-black px-2 py-2 text-sm"
+                                                    class="flex items-center w-full px-2 py-2 text-sm text-black capitalize rounded-md"
                                                 >
                                                     <div class="w-6 h-6 mr-2">
                                                         <UserIcon
-                                                            class="ml-2 mr-2 h-5 w-5 text-black hover:text-violet-100"
+                                                            class="w-5 h-5 ml-2 mr-2 text-black hover:text-violet-100"
                                                             aria-hidden="true"
                                                         />
                                                     </div>
@@ -173,7 +173,7 @@
                             </Menu>
                         </div>
                         <div
-                            class="z-99999 relative hidden md:flex items-center justify-center text-right"
+                            class="relative items-center justify-center hidden text-right z-99999 md:flex"
                         >
                             <Menu
                                 as="div"
@@ -184,7 +184,7 @@
                                         class="flex w-full px-[16px] py-[12px] items-center justify-center rounded-md text-sm font-medium hover:bg-opacity-30 focus:outline-none"
                                     >
                                         <QuestionMarkCircleIcon
-                                            class="ml-2 mr-2 h-5 w-5 text-black"
+                                            class="w-5 h-5 ml-2 mr-2 text-black"
                                             aria-hidden="true"
                                         />
                                         Help
@@ -204,7 +204,7 @@
                                     >
                                         <div class="px-1 py-1">
                                             <MenuItem
-                                                class="flex w-full items-center capitalize rounded-md text-black px-2 py-2 text-sm"
+                                                class="flex items-center w-full px-2 py-2 text-sm text-black capitalize rounded-md"
                                                 v-for="link in links"
                                                 :key="link.id"
                                                 :href="link.href"
@@ -240,7 +240,7 @@
 
                         <Link
                             href="/cart"
-                            class="flex items-center justify-center relative"
+                            class="relative flex items-center justify-center"
                         >
                             <div
                                 v-if="Object.keys(cart).length > 0"
@@ -255,12 +255,12 @@
                         </Link>
                     </div>
 
-                    <div id="mobile_form" class="w-full md:hidden relative">
+                    <div id="mobile_form" class="relative w-full md:hidden">
                         <form class="flex items-center justify-center w-full">
                             <div
-                                class="flex items-center w-full border-gray-400 justify-center relative"
+                                class="relative flex items-center justify-center w-full border-gray-400"
                             >
-                                <div class="px-4 absolute left-0">
+                                <div class="absolute left-0 px-4">
                                     <MagnifyingGlassIcon class="w-6 h-6" />
                                 </div>
                                 <input

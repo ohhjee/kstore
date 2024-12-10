@@ -15,6 +15,7 @@
                     :show="show"
                     :date="date"
                     :msg="msg"
+                    :reward="reward"
                 />
                 <!-- <orders class="mt-[5rem]" /> -->
             </div>
@@ -46,6 +47,9 @@ export default defineComponent({
         },
         msg: {
             type: String,
+        },
+        reward: {
+            type: Number,
         },
     },
     components: { profile, AuthenticatedLayout, Head, Orders },

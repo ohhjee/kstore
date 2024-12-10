@@ -26,45 +26,45 @@
                         </button>
                     </div>
                 </div>
-                <user-settings class="" />
+                <user-settings class="" :reward="reward" />
             </div>
         </div>
         <!-- <div class="mt-[3rem] px-4" v-if="loading">
             <div
                 class="h-[20vh] md:h-[40vh] lg:h-[30vh] w-full mx-auto rounded"
             >
-                <div class="animate-pulse flex h-full w-full space-x-5 mx-auto">
+                <div class="flex w-full h-full mx-auto space-x-5 animate-pulse">
                     <div
                         class="bg-gray-300 w-[50vw] sm:w-[30vw] md:w-[20vw] h-full"
                     ></div>
-                    <div class="space-y-4 w-full">
+                    <div class="w-full space-y-4">
                         <div
-                            class="bg-gray-300 h-4 rounded w-2/4 lg:w-1/4"
+                            class="w-2/4 h-4 bg-gray-300 rounded lg:w-1/4"
                         ></div>
                         <div class="w-2/4">
-                            <div class="bg-gray-300 h-4 rounded w-full"></div>
+                            <div class="w-full h-4 bg-gray-300 rounded"></div>
                         </div>
                         <div class="w-3/4">
-                            <div class="bg-gray-300 h-4 rounded w-full"></div>
+                            <div class="w-full h-4 bg-gray-300 rounded"></div>
                         </div>
                         <div class="w-3/4">
-                            <div class="bg-gray-300 h-4 rounded w-full"></div>
+                            <div class="w-full h-4 bg-gray-300 rounded"></div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="mt-4 animate-pulse">
                 <div class="flex items-center justify-between">
-                    <div class="bg-gray-300 h-4 rounded w-2/4 lg:w-1/4"></div>
+                    <div class="w-2/4 h-4 bg-gray-300 rounded lg:w-1/4"></div>
                     <div
-                        class="bg-gray-300 py-1 rounded text-white capitalize font-semibold h-8 w-12"
+                        class="w-12 h-8 py-1 font-semibold text-white capitalize bg-gray-300 rounded"
                     ></div>
                 </div>
 
                 <div class="mt-4">
-                    <form class="w-full border space-y-5">
+                    <form class="w-full space-y-5 border">
                         <div
-                            class="flex flex-col md:flex-row space-y-3 md:space-y-0 w-full justify-between items-center"
+                            class="flex flex-col items-center justify-between w-full space-y-3 md:flex-row md:space-y-0"
                         >
                             <div
                                 class="w-full md:w-5/12 bg-gray-300 h-[42px] rounded"
@@ -78,7 +78,7 @@
                             </div>
                         </div>
                         <div
-                            class="flex flex-col md:flex-row space-y-3 md:space-y-0 w-full justify-between items-center"
+                            class="flex flex-col items-center justify-between w-full space-y-3 md:flex-row md:space-y-0"
                         >
                             <div
                                 class="w-full md:w-5/12 bg-gray-300 h-[42px] rounded"
@@ -104,21 +104,21 @@
         </div>
         <div class="mt-[3rem] px-4" v-else>
             <div class="h-[20vh] md:h-[40vh] lg:h-[30vh] w-full rounded">
-                <div class="flex h-full w-full space-x-5">
+                <div class="flex w-full h-full space-x-5">
                     <div
                         class="bg-gray-300 w-[50vw] sm:w-[30vw] lg:w-[20vw] md:w-[40vw] h-full"
                     ></div>
 
-                    <div class="space-y-4 w-full">
-                        <div class="h-4 rounded w-full leading-3 lg:w-2/4">
+                    <div class="w-full space-y-4">
+                        <div class="w-full h-4 leading-3 rounded lg:w-2/4">
                             {{ user?.first_name }}
                             {{ user?.last_name }}
                         </div>
-                        <div class="h-4 rounded w-full leading-3">
+                        <div class="w-full h-4 leading-3 rounded">
                             {{ user?.email }}
                         </div>
-                        <div class="bg-gray-300 h-4 rounded w-3/4"></div>
-                        <div class="bg-gray-300 h-4 rounded w-3/4"></div>
+                        <div class="w-3/4 h-4 bg-gray-300 rounded"></div>
+                        <div class="w-3/4 h-4 bg-gray-300 rounded"></div>
                     </div>
                 </div>
             </div>
@@ -129,7 +129,7 @@
                     <div>
                         <button
                             @click="show"
-                            class="bg-gray-400 py-1 rounded text-white capitalize font-semibold px-4"
+                            class="px-4 py-1 font-semibold text-white capitalize bg-gray-400 rounded"
                         >
                             edit
                         </button>
@@ -137,9 +137,9 @@
                 </div>
 
                 <div class="mt-4">
-                    <div class="w-full border space-y-5" v-if="hidForm">
+                    <div class="w-full space-y-5 border" v-if="hidForm">
                         <div
-                            class="flex flex-col md:flex-row space-y-3 md:space-y-0 w-full justify-between items-center"
+                            class="flex flex-col items-center justify-between w-full space-y-3 md:flex-row md:space-y-0"
                         >
                             <div
                                 class="w-full md:w-5/12 bg-gray-300 h-[42px] rounded"
@@ -191,12 +191,12 @@
                     </div>
                     <form
                         name="editForm"
-                        class="w-full border space-y-5"
+                        class="w-full space-y-5 border"
                         v-if="showForm"
                         @submit.prevent="UpdateUser"
                     >
                         <div
-                            class="flex flex-col md:flex-row space-y-3 md:space-y-0 w-full justify-between items-center"
+                            class="flex flex-col items-center justify-between w-full space-y-3 md:flex-row md:space-y-0"
                         >
                             <div
                                 class="w-full md:w-5/12 bg-gray-300 h-[42px] rounded"
@@ -254,7 +254,7 @@
                                         'cursor-not-allowed bg-gray-400 text-gray-900'
                                     "
                                     :disabled="form.processing"
-                                    class="bg-blue-400 flex items-center justify-center py-1 rounded text-white capitalize font-semibold px-4"
+                                    class="flex items-center justify-center px-4 py-1 font-semibold text-white capitalize bg-blue-400 rounded"
                                 >
                                     Save update
                                     <span v-if="form.processing">
@@ -262,7 +262,7 @@
                                             <div role="status">
                                                 <svg
                                                     aria-hidden="true"
-                                                    class="inline ml-2 w-4 h-4 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                                                    class="inline w-4 h-4 ml-2 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
                                                     viewBox="0 0 100 101"
                                                     fill="none"
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -328,6 +328,9 @@ export default defineComponent({
         },
         msg: {
             type: String,
+        },
+        reward: {
+            type: Object,
         },
     },
     setup() {

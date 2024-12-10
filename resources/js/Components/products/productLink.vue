@@ -9,17 +9,15 @@
                     <div class="w-full">
                         <div class="w-full h-full p-4">
                             <img
-                                :src="
-                                    'http://127.0.0.1:8000/' + products?.image
-                                "
+                                :src="'http://kstore.test/' + products?.image"
                                 class="w-full h-full rounded-md"
                                 alt=""
                             />
                         </div>
                     </div>
-                    <div class="col-span-2 w-full p-2">
+                    <div class="w-full col-span-2 p-2">
                         <div
-                            class="grid grid-cols-6 place-content-center items-center"
+                            class="grid items-center grid-cols-6 place-content-center"
                         >
                             <div class="col-span-5">
                                 <div class="flex items-center space-x-2">
@@ -160,7 +158,7 @@
             <div class="w-full col-span-3 bg-white rounded shadow">
                 <div class="">
                     <div id="title" class="p-2">product details</div>
-                    <hr class="mb-2 mt-0" />
+                    <hr class="mt-0 mb-2" />
                     <div class="px-2">
                         <div
                             v-html="products?.description"
